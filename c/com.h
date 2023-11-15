@@ -5,10 +5,10 @@
 #ifndef C_CONNEXION_H
 #define C_CONNEXION_H
 
-#define MAX_MSG_SIZE (27)
+#define MAX_MSG_SIZE 27
 #define MAX_MESSAGES 200
-#define SERVER_PORT (12346)
-#define MAX_CONNEXIONS_EN_ATTENTE (5)
+#define SERVER_PORT 12345
+#define MAX_CONNEXIONS_EN_ATTENTE 5
 
 #include <sys/types.h>
 #include <inttypes.h>

@@ -58,10 +58,10 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 
     bytes_read = read(socket_client, buffer, length);
     if (bytes_read < 0) {
-        perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
+        perror("COM | connexion_read : Erreur lors de la lecture depuis la socket\n");
         return -1;
     } else if (bytes_read == 0) {
-        printf("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
+        printf("COM | connexion_read : La connexion a été fermée par le client\n");
         connexion_accept();
     }
 
@@ -71,7 +71,7 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 ssize_t connexion_write(const uint8_t* data, size_t length) {
     ssize_t num_written = write(socket_client, data, length);
     if (num_written < 0) {
-        perror("CONNEXION | connexion_write : Erreur lors de l'écriture vers la socket");
+        perror("COM | connexion_write : Erreur lors de l'écriture vers la socket");
     }
     return num_written;
 }

@@ -43,20 +43,20 @@ int main() {
     printf("Message sent to server\n");
 
     // Désérialisation du message pour vérification ou autre usage
-    Message *msg_in;
-    msg_in = message__unpack(NULL, len, buf);
-    if (msg_in == NULL) {
-        fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
-        free(buf);
-        return EXIT_FAILURE;
-    }
+    // Message *msg_in;
+    // msg_in = message__unpack(NULL, len, buf);
+    // if (msg_in == NULL) {
+    //     fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+    //     free(buf);
+    //     return EXIT_FAILURE;
+    // }
 
-    printf("Received: %s\n", msg_in->text);
+    // printf("Received: %s\n", msg_in->text);
 
     // Libération du message désérialisé
-    message__free_unpacked(msg_in, NULL);
+    // message__free_unpacked(msg_in, NULL);
 
     // Nettoyage
-    free(buf);
+    // free(buf);
     return EXIT_SUCCESS;
 }

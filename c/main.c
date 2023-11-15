@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "com.h"
-#include "fichier.pb-c.h"
+#include "com/com.h"
+#include "proto/fichier.pb-c.h"
 
 int main() {
     // Initialise la connexion (remplacer par le port réel utilisé par votre application)

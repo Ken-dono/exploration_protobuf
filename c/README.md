@@ -24,6 +24,7 @@ Ce mini-projet démontre l'utilisation de Protocol Buffers (protobuf) pour séri
 Assurez-vous d'avoir les paquets suivants installés :
 - `protobuf-c-compiler` : Le compilateur pour Protocol Buffers.
 - `libprotobuf-c-dev` : Les bibliothèques de développement pour protobuf en C.
+- `pkg-config`
 
 Pour compiler le projet, utilisez la commande `make` à la racine du projet.
 

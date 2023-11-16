@@ -86,7 +86,7 @@ void *thread_write_fct() {
             connexion_write(buffer, len);
             printf("COM | thread_write_fct : message send : ");
             for (size_t i = 0; i < len; ++i) {
-                printf("%02X \n", buffer[i]);
+                printf("%02X", buffer[i]);
             }
             printf("\n");
 

@@ -5,7 +5,7 @@
 #include "protocole.h"
 #include "string.h"
 
-size_t protocole_code(message_t * message, uint8_t *buffer)
+size_t protocole_code(message_t * message, uint8_t * buffer)
 {
     // Création d'un objet Message
     BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 

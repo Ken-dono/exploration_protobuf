@@ -73,6 +73,7 @@ void *thread_write_fct() {
             perror("COM | thread_write_fct : mq_receive");
             exit(EXIT_FAILURE);
         } else if (bytes_send > 0){
+
             uint8_t buffer[MAX_MSG_SIZE];
             size_t len = protocole_code(msg, buffer);
 
@@ -84,7 +85,7 @@ void *thread_write_fct() {
             connexion_write(buffer, len);
             printf("COM | thread_write_fct : message send : ");
             for (size_t i = 0; i < len; ++i) {
-                printf("%02X ", buffer[i]);
+                printf("%02X \n", buffer[i]);
             }
             printf("\n");
 

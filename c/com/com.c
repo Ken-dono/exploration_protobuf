@@ -98,7 +98,6 @@ void *thread_write_fct() {
             printf("Send: ID :%d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
             // Libération du message désérialisé
             battery_level__free_unpacked(battery_in, NULL);
-
         }
         free(msg);
         usleep(200);

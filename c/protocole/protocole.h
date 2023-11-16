@@ -21,7 +21,7 @@
  */
 typedef struct
 {
-    uint32_t dlc;
+    uint8_t dlc;
     uint32_t id;
     uint32_t payload[MAX_MSG_SIZE];
 } message_t;
@@ -31,12 +31,6 @@ typedef struct
  * @param message   the message to send
  * @param buffer    the buffer that will contain the encoded frame
  */
-void protocole_code(message_t * message, uint8_t *buffer);
-
-/**
- * Decode an incoming network frame according to the protocole
- * @param len       the lenght of message
- * @param buffer    the network fram received */
-void protocole_decode(message_t * message, uint8_t *buffer);
+size_t protocole_code(message_t * message, uint8_t *buffer);
 
 #endif //C_PROTOCOLE_H

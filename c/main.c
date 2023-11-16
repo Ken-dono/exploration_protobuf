@@ -8,7 +8,7 @@
 
 int main() {
     // Initialise la connexion (remplacer par le port réel utilisé par votre application)
-    com_init(12345);
+    com_init();
 
 
     // Exemple d'envoi de message : message batterie 20%

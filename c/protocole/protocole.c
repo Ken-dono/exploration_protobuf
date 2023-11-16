@@ -7,8 +7,6 @@
 
 void protocole_code(message_t * message, uint8_t *buffer)
 {
-    buffer[0] = message->id;
-
     // Création d'un objet Message
     BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 
 
@@ -17,7 +15,8 @@ void protocole_code(message_t * message, uint8_t *buffer)
     batteryLevel.level = message->payload[0];
 
     // Sérialisation du message
-    size_t len = battery_level__get_packed_size(&batteryLevel);
+    //size_t len = battery_level__get_packed_size(&batteryLevel);
+    size_t len = 27;
     buffer = malloc(len);
     if (buffer == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire\n");

@@ -115,11 +115,28 @@ void *thread_write_fct() {
             uint8_t buffer[MAX_MSG_SIZE];
             protocole_code(msg, buffer);
 
-           for (int i = 0; i < MAX_MSG_SIZE; ++i) {
-               printf("%02X ", buffer[i]);
-           }
-           printf("\n");
+            for (int i = 0; i < MAX_MSG_SIZE; ++i) {
+                printf("%02X ", buffer[i]);
+            }
+            printf("\n");
 
+            // Désérialisation du message pour vérification
+            BatteryLevel *battery_in;
+            size_t len = 27;
+            battery_in = battery_level__unpack(NULL, len, buffer);
+            if (battery_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                //free(buffer);
+                exit(EXIT_FAILURE);
+            }
+
+            printf("Received: ID :%d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
+
+            // Libération du battery_level désérialisé
+            battery_level__free_unpacked(battery_in, NULL);
+
+            // Nettoyage
+            //free(buffer);
 
             //connexion_write(buffer, MAX_MSG_SIZE);
         }

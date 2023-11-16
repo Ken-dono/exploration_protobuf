@@ -31,6 +31,8 @@ typedef struct
  * @param message   the message to send
  * @param buffer    the buffer that will contain the encoded frame
  */
-size_t protocole_code(message_t * message, uint8_t *buffer);
+void protocole_code(message_t * message, uint8_t ** buffer, size_t * len);
+
+void protocole_free(uint8_t * buffer);
 
 #endif //C_PROTOCOLE_H

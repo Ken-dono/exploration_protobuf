@@ -74,8 +74,9 @@ void *thread_write_fct() {
             exit(EXIT_FAILURE);
         } else if (bytes_send > 0){
 
-            uint8_t buffer[MAX_MSG_SIZE];
-            size_t len = protocole_code(msg, buffer);
+            uint8_t *buffer;
+            size_t len;
+            protocole_code(msg, &buffer, &len);
 
             //Envoi de la DLC
             connexion_write(&msg->dlc, 1);
@@ -99,6 +100,7 @@ void *thread_write_fct() {
             printf("Send: ID :%d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
             // Libération du message désérialisé
             battery_level__free_unpacked(battery_in, NULL);
+            protocole_free(buffer);
         }
         free(msg);
         usleep(200);

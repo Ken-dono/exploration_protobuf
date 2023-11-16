@@ -5,7 +5,7 @@
 #include "protocole.h"
 #include "string.h"
 
-size_t protocole_code(message_t * message, uint8_t * buffer)
+void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
 {
     // Création d'un objet Message
     BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 
@@ -15,12 +15,16 @@ size_t protocole_code(message_t * message, uint8_t * buffer)
     batteryLevel.level = message->payload[0];
 
     // Sérialisation du message
-    size_t len = battery_level__get_packed_size(&batteryLevel);
-    buffer = malloc(len);
-    if (buffer == NULL) {
+    *len = battery_level__get_packed_size(&batteryLevel);
+
+     *buffer = malloc(*len);
+    if (*buffer == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire\n");
         exit(EXIT_FAILURE);
     }
-    battery_level__pack(&batteryLevel, buffer);
-    return len;
+    battery_level__pack(&batteryLevel, *buffer);
+}
+
+void protocole_free(uint8_t * buffer){
+    free(buffer);
 }

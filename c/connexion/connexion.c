@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "com.h"
+#include "connexion.h"
 
 /* Socket de connexion au serveur. */
 static int socket_serveur;
@@ -40,15 +40,15 @@ void connexion_init(int server_port){
 
     /* Mise en ecoute du socket. */
     listen(socket_serveur, MAX_CONNEXIONS_EN_ATTENTE);
-    printf("COM | connexion_init : socket ouverte sur le port : %d\n", server_port);
+    printf("CONNEXION | connexion_init : socket ouverte sur le port : %d\n", server_port);
 }
 
 int connexion_accept(){
     socket_client = accept(socket_serveur, NULL, NULL);
     if (socket_client == 1) {
-        perror("COM | connexion_accept : Erreur lors de l'acceptation de la connexion entrante\n\n");
+        perror("CONNEXION | connexion_accept : Erreur lors de l'acceptation de la connexion entrante\n\n");
     } else
-        printf("COM | connexion_accept : Client connecté sur la socket : %d\n", socket_client);
+        printf("CONNEXION | connexion_accept : Client connecté sur la socket : %d\n", socket_client);
 
     return socket_client;
 }
@@ -58,10 +58,10 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 
     bytes_read = read(socket_client, buffer, length);
     if (bytes_read < 0) {
-        perror("COM | connexion_read : Erreur lors de la lecture depuis la socket\n");
+        perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
         return -1;
     } else if (bytes_read == 0) {
-        printf("COM | connexion_read : La connexion a été fermée par le client\n");
+        printf("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
         connexion_accept();
     }
 
@@ -71,7 +71,7 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 ssize_t connexion_write(const uint8_t* data, size_t length) {
     ssize_t num_written = write(socket_client, data, length);
     if (num_written < 0) {
-        perror("COM | connexion_write : Erreur lors de l'écriture vers la socket");
+        perror("CONNEXION | connexion_write : Erreur lors de l'écriture vers la socket");
     }
     return num_written;
 }

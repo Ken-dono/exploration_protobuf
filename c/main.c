@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "com/com.h"
+#include "connexion/connexion.h"
 #include "proto/fichier.pb-c.h"
 
 int main() {

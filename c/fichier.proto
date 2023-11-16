@@ -1,5 +1,6 @@
 syntax = "proto3";
 
-message Message {
-  string text = 1;
+message BatteryLevel {
+  uint32 id = 1;      // ID du message
+  uint32 level = 2;   // Niveau de la batterie
 }

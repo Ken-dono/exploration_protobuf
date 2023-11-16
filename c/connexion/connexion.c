@@ -8,10 +8,15 @@
 #include <stdio.h>
 
 #include "connexion.h"
+#include "../protocole/protocole.h"
 
 /* Socket de connexion au serveur. */
 static int socket_serveur;
 static int socket_client;
+
+// static pthread_t thread_read;
+// static pthread_t thread_write;
+
 
 void connexion_init(int server_port){
 
@@ -40,7 +45,6 @@ void connexion_init(int server_port){
 
     /* Mise en ecoute du socket. */
     listen(socket_serveur, MAX_CONNEXIONS_EN_ATTENTE);
-    printf("CONNEXION | connexion_init : socket ouverte sur le port : %d\n", server_port);
 }
 
 int connexion_accept(){
@@ -54,19 +58,26 @@ int connexion_accept(){
 }
 
 ssize_t connexion_read(uint8_t *buffer, size_t length) {
-    ssize_t bytes_read;
+    size_t total_bytes_read = 0; // Total d'octets lus
+    ssize_t bytes_read; // Octets lus lors de chaque appel read()
 
-    bytes_read = read(socket_client, buffer, length);
-    if (bytes_read < 0) {
-        perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
-        return -1;
-    } else if (bytes_read == 0) {
-        printf("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
-        connexion_accept();
+    while (total_bytes_read < length) {
+        bytes_read = read(socket_client, buffer + total_bytes_read, length - total_bytes_read);
+
+        if (bytes_read < 0) {
+            perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
+            return -1; // Retourne une erreur
+        } else if (bytes_read == 0) {
+            printf("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
+            return total_bytes_read; // Retourne le nombre total d'octets lus jusqu'à présent
+        }
+
+        total_bytes_read += bytes_read;
     }
 
-    return bytes_read;
+    return total_bytes_read; // Retourne le nombre total d'octets lus
 }
+
 
 ssize_t connexion_write(const uint8_t* data, size_t length) {
     ssize_t num_written = write(socket_client, data, length);

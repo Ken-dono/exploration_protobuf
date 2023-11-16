@@ -15,7 +15,7 @@ PROTOBUF_C__BEGIN_DECLS
 #endif
 
 
-typedef struct _Message Message;
+typedef struct _BatteryLevel BatteryLevel;
 
 
 /* --- enums --- */
@@ -23,39 +23,46 @@ typedef struct _Message Message;
 
 /* --- messages --- */
 
-struct  _Message
+struct  _BatteryLevel
 {
   ProtobufCMessage base;
-  char *text;
+  /*
+   * ID du message
+   */
+  uint32_t id;
+  /*
+   * Niveau de la batterie
+   */
+  uint32_t level;
 };
-#define MESSAGE__INIT \
- { PROTOBUF_C_MESSAGE_INIT (&message__descriptor) \
-    , (char *)protobuf_c_empty_string }
+#define BATTERY_LEVEL__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&battery_level__descriptor) \
+    , 0, 0 }
 
 
-/* Message methods */
-void   message__init
-                     (Message         *message);
-size_t message__get_packed_size
-                     (const Message   *message);
-size_t message__pack
-                     (const Message   *message,
+/* BatteryLevel methods */
+void   battery_level__init
+                     (BatteryLevel         *message);
+size_t battery_level__get_packed_size
+                     (const BatteryLevel   *message);
+size_t battery_level__pack
+                     (const BatteryLevel   *message,
                       uint8_t             *out);
-size_t message__pack_to_buffer
-                     (const Message   *message,
+size_t battery_level__pack_to_buffer
+                     (const BatteryLevel   *message,
                       ProtobufCBuffer     *buffer);
-Message *
-       message__unpack
+BatteryLevel *
+       battery_level__unpack
                      (ProtobufCAllocator  *allocator,
                       size_t               len,
                       const uint8_t       *data);
-void   message__free_unpacked
-                     (Message *message,
+void   battery_level__free_unpacked
+                     (BatteryLevel *message,
                       ProtobufCAllocator *allocator);
 /* --- per-message closures --- */
 
-typedef void (*Message_Closure)
-                 (const Message *message,
+typedef void (*BatteryLevel_Closure)
+                 (const BatteryLevel *message,
                   void *closure_data);
 
 /* --- services --- */
@@ -63,7 +70,7 @@ typedef void (*Message_Closure)
 
 /* --- descriptors --- */
 
-extern const ProtobufCMessageDescriptor message__descriptor;
+extern const ProtobufCMessageDescriptor battery_level__descriptor;
 
 PROTOBUF_C__END_DECLS
 

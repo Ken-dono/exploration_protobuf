@@ -1,46 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "connexion/connexion.h"
+#include "com/com.h"
 #include "proto/fichier.pb-c.h"
+#include "protocole/protocole.h"
+
 
 int main() {
     // Initialise la connexion (remplacer par le port réel utilisé par votre application)
-    connexion_init(12345);
+    com_init(12345);
 
-    // Attend une connexion entrante
-    int socket_client = connexion_accept();
-    if (socket_client == -1) {
-        fprintf(stderr, "Erreur lors de l'acceptation de la connexion client.\n");
-        return EXIT_FAILURE;
-    }
 
-    // Création d'un objet Message
-    Message msg = MESSAGE__INIT; 
-    uint8_t *buf; // Buffer pour stocker les données sérialisées
-    unsigned len; // Longueur des données sérialisées
+    // Exemple d'envoi de message : message batterie 20%
+    message_t msg_battery_lvl;
+    msg_battery_lvl.id = 0X04;
+    msg_battery_lvl.dlc = 0x02;
+    msg_battery_lvl.payload[0] = 20;
+    com_send_message(&msg_battery_lvl);
 
-    // Assignation d'un message
-    msg.text = "M_EMB : Ceci est un test de packetage et dépackettage.";
 
-    // Sérialisation du message
-    len = message__get_packed_size(&msg);
-    buf = malloc(len);
-    if (buf == NULL) {
-        fprintf(stderr, "Erreur d'allocation de mémoire\n");
-        return EXIT_FAILURE;
-    }
-    message__pack(&msg, buf);
-
-    fprintf(stderr, "Writing %d serialized bytes\n", len); // Debug: affichage de la taille du message sérialisé
+    //fprintf(stderr, "Writing %d serialized bytes\n", len); // Debug: affichage de la taille du message sérialisé
 
     // Envoi du message sérialisé sur la socket
-    if (connexion_write(buf, len) == -1) {
-        perror("Erreur lors de l'envoi du message");
-        free(buf);
-        return EXIT_FAILURE;
-    }
+    // if (connexion_write(buf, len) == -1) {
+    //     perror("Erreur lors de l'envoi du message");
+    //     free(buf);
+    //     return EXIT_FAILURE;
+    // }
 
-    printf("Message sent to server\n");
+    // printf("Message sent to server\n");
 
     // Désérialisation du message pour vérification ou autre usage
     // Message *msg_in;

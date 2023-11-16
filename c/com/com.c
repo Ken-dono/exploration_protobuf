@@ -136,7 +136,7 @@ void *thread_write_fct() {
             battery_level__free_unpacked(battery_in, NULL);
 
             // Nettoyage
-            //free(buffer);
+            free(buffer);
 
             //connexion_write(buffer, MAX_MSG_SIZE);
         }

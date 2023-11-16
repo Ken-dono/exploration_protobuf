@@ -17,6 +17,10 @@ int main() {
     msg_battery_lvl.dlc = 0x02;
     msg_battery_lvl.payload[0] = 20;
     com_send_message(&msg_battery_lvl);
+    // Boucle d'execution de l'exploration
+    while (1){
+
+    }
 
 
     //fprintf(stderr, "Writing %d serialized bytes\n", len); // Debug: affichage de la taille du message sérialisé

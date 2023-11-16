@@ -122,7 +122,7 @@ void *thread_write_fct() {
 
             // Désérialisation du message pour vérification
             BatteryLevel *battery_in;
-            size_t len = 27;
+            size_t len = battery_level__get_packed_size(battery_in);
             battery_in = battery_level__unpack(NULL, len, buffer);
             if (battery_in == NULL) {
                 fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");

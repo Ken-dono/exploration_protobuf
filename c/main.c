@@ -18,7 +18,8 @@ int main() {
 
     int ch;
     while ((ch = getchar()) != 'q') {}
-
+    
+    com_free();
     printf("Fin du programme.\n");
     return EXIT_SUCCESS;
 }

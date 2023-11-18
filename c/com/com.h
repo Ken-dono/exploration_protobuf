@@ -26,4 +26,9 @@ void com_init();
  */
 void com_send_message(message_t *msg);
 
+/**
+ * Stop connection with M_CTRL
+ */
+void com_free();
+
 #endif //C_COM_H

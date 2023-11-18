@@ -21,20 +21,6 @@ static int running = 1;
 mqd_t mq_write;
 
 void com_init() {
-    // Open mq for socket writing
-    struct mq_attr attr;
-    attr.mq_flags = 0;
-    attr.mq_maxmsg = 10;
-    attr.mq_msgsize = sizeof(message_t);
-
-    mq_write = mq_open(MQ_WRITE_NAME, O_CREAT | O_RDWR, 0644, &attr);
-    if (mq_write == (mqd_t ) -1)
-    {
-        perror("COM | com_init : Erreur création mq\n");
-        mq_unlink( MQ_WRITE_NAME );
-        mq_write = mq_open( MQ_WRITE_NAME , O_RDWR  |O_CREAT, 0644, &attr);
-    }
-
     // Opening server on port SERVEUR_PORT
     connexion_init(SERVER_PORT);
 
@@ -47,7 +33,6 @@ void com_init() {
         fprintf(stderr, "COM | com_init : erreur pthread_create thread_read\n");
         exit(-1);
     }
-
 }
 
 void com_send_message(message_t * message){
@@ -58,7 +43,20 @@ void com_send_message(message_t * message){
 }
 
 void *thread_write_fct() {
+    // Open mq for socket writing
+    struct mq_attr attr;
+    attr.mq_flags = 0;
+    attr.mq_maxmsg = 10;
+    attr.mq_msgsize = sizeof(message_t);
+    mq_write = mq_open(MQ_WRITE_NAME, O_CREAT | O_RDWR, 0644, &attr);
+    if (mq_write == (mqd_t ) -1)
+    {
+        perror("COM | com_init : Erreur création mq\n");
+        mq_unlink( MQ_WRITE_NAME );
+        mq_write = mq_open( MQ_WRITE_NAME , O_RDWR  |O_CREAT, 0644, &attr);
+    }
 
+    // Main
     while (running){
         // Read message queue
         message_t *msg = malloc(sizeof(message_t));
@@ -73,24 +71,24 @@ void *thread_write_fct() {
             perror("COM | thread_write_fct : mq_receive");
             exit(EXIT_FAILURE);
         } else if (bytes_send > 0){
-
-            uint8_t *buffer;
-            size_t len;
-            protocole_code(msg, &buffer, &len);
-
-            //Envoi de la DLC
+            // Send a first packet with the lenght of the next packet
             connexion_write(&msg->dlc, 1);
             printf("COM | thread_write_fct : dlc_send : %d\n", msg->dlc);
 
-            //Envoi du message prototypé
+            // Serialize the message, prepare and send the second packet
+            uint8_t *buffer;
+            size_t len;
+            protocole_code(msg, &buffer, &len);
             connexion_write(buffer, len);
             printf("COM | thread_write_fct : message send : ");
+
+            // DEBUG : Print the sended package
             for (size_t i = 0; i < len; ++i) {
                 printf("%02X", buffer[i]);
             }
             printf("\n");
 
-            // Désérialisation du message pour vérification
+            // DEBUG : Désérialisation du message pour vérification
             BatteryLevel *battery_in = battery_level__unpack(NULL, len, buffer);
             if (battery_in == NULL) {
                 fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
@@ -100,10 +98,16 @@ void *thread_write_fct() {
             printf("Send: ID :%d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
             // Libération du message désérialisé
             battery_level__free_unpacked(battery_in, NULL);
+
+            // Free the buffer
             protocole_free(buffer);
         }
         free(msg);
         usleep(200);
     }
     return NULL;
+}
+
+void com_free(){
+    
 }

@@ -14,10 +14,6 @@
 static int socket_serveur;
 static int socket_client;
 
-// static pthread_t thread_read;
-// static pthread_t thread_write;
-
-
 void connexion_init(int server_port){
 
     struct sockaddr_in socket_serveur_config;

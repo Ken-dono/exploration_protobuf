@@ -6,6 +6,7 @@
 static int socket_client;
 
 static pthread_t thread_write;
+static pthread_t thread_read;
 
 /**
  * Thread function used to regularly check the message queue and write messages on the socket
@@ -14,7 +15,12 @@ static pthread_t thread_write;
  */
 void *thread_write_fct();
 
-void test_message();
+/**
+ * Thread function used read messages on the socket
+ * @param arg
+ * @return
+ */
+void *thread_read_fct();
 
 static int running = 1;
 
@@ -30,6 +36,11 @@ void com_init() {
 
     // Launch writing thread
     if (pthread_create(&thread_write, NULL, thread_write_fct, NULL) != 0) {
+        fprintf(stderr, "COM | com_init : erreur pthread_create thread_write\n");
+        exit(-1);
+    }
+    // Launch reading thread
+    if (pthread_create(&thread_read, NULL, thread_read_fct, NULL) != 0) {
         fprintf(stderr, "COM | com_init : erreur pthread_create thread_read\n");
         exit(-1);
     }
@@ -108,6 +119,16 @@ void *thread_write_fct() {
     return NULL;
 }
 
+void *thread_read_fct() {
+    // Main
+    while (running){
+        // TODO : coder cette merde
+        free(msg);
+        usleep(200);
+    }
+    return NULL;
+}
+
 void com_free(){
-    
+
 }

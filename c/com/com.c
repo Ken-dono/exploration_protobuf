@@ -123,7 +123,6 @@ void *thread_read_fct() {
     // Main
     while (running){
         // TODO : coder cette merde
-        free(msg);
         usleep(200);
     }
     return NULL;

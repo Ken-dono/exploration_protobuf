@@ -10,7 +10,7 @@ int main() {
     message_t msg_battery_lvl;
     msg_battery_lvl.dlc = 0x02;
     msg_battery_lvl.id = 0X04;
-    msg_battery_lvl.payload[0] = 20;
+    msg_battery_lvl.payload[0] = 100;
     com_send_message(&msg_battery_lvl);
     
     // Boucle d'execution avec interruption
@@ -19,7 +19,8 @@ int main() {
     int ch;
     while ((ch = getchar()) != 'q') {}
 
-    //com_free();
+    printf("Terminaison des threads.\n");
+    com_free();
     printf("Fin du programme.\n");
     return EXIT_SUCCESS;
 }

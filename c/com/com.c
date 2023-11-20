@@ -70,7 +70,7 @@ void *thread_write_fct() {
     }
 
     // Main
-    while (running){
+    while (running == 1){
         // Read message queue
         message_t *msg = malloc(sizeof(message_t));
         if (msg == NULL) {
@@ -84,14 +84,17 @@ void *thread_write_fct() {
             perror("COM | thread_write_fct : mq_receive");
             exit(EXIT_FAILURE);
         } else if (bytes_send > 0){
-            // Send a first packet with the lenght of the next packet
-            connexion_write(&msg->dlc, 1);
-            printf("COM | thread_write_fct : dlc_send : %02X\n", msg->dlc);
-
-            // Serialize the message, prepare and send the second packet
+            // Serialize the message
             uint8_t *buffer;
             size_t len;
             protocole_code(msg, &buffer, &len);
+
+            // Send a first packet with the lenght of the serialized packet
+            uint8_t len_byte = (uint8_t)len;
+            connexion_write(&len_byte, 1);
+            printf("COM | thread_write_fct : size_send : %02X\n", len_byte);
+
+            // Send the serialized packet
             connexion_write(buffer, len);
             printf("COM | thread_write_fct : message send : ");
 
@@ -133,7 +136,7 @@ void *thread_write_fct() {
 }
 
 void *thread_read_fct() {
-    while (running) {
+    while (running == 1) {
         // Lire la taille du message (2 octets)
         uint8_t size_buffer[2];
         connexion_read(size_buffer, sizeof(size_buffer));

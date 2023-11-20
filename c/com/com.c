@@ -177,6 +177,8 @@ void com_free(){
     // Signal aux threads de s'arrêter
     running = 0;
 
+    
+
     // Joindre les threads pour s'assurer qu'ils ont terminé
     if (pthread_join(thread_write, NULL) != 0) {
         perror("COM | com_free : erreur pthread_join thread_write");

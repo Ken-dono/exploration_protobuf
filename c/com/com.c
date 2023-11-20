@@ -39,11 +39,13 @@ void com_init() {
         fprintf(stderr, "COM | com_init : erreur pthread_create thread_write\n");
         exit(-1);
     }
+    printf("COM | com_init : thread_write lancé\n");
     // Launch reading thread
     if (pthread_create(&thread_read, NULL, thread_read_fct, NULL) != 0) {
         fprintf(stderr, "COM | com_init : erreur pthread_create thread_read\n");
         exit(-1);
     }
+    printf("COM | com_init : thread_read lancé\n");
 }
 
 void com_send_message(message_t * message){
@@ -95,7 +97,7 @@ void *thread_write_fct() {
 
             // DEBUG : Print the sended package
             for (size_t i = 0; i < len; ++i) {
-                printf("%02X", buffer[i]);
+                printf("%02X ", buffer[i]);
             }
             printf("\n");
 
@@ -106,7 +108,7 @@ void *thread_write_fct() {
                 exit(EXIT_FAILURE);
             }
             // Traitement du message désérialisé
-            printf("Send: ID :%d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
+            printf("Send : ID : %d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
             // Libération du message désérialisé
             battery_level__free_unpacked(battery_in, NULL);
 
@@ -115,6 +117,17 @@ void *thread_write_fct() {
         }
         free(msg);
         usleep(200);
+    }
+    // Fermeture de la file de messages avant de sortir de la fonction
+    if (mq_close(mq_write) == -1) {
+        perror("COM | thread_write_fct : Erreur fermeture mq_write");
+        exit(EXIT_FAILURE);
+    }
+
+    // Suppression de la file de messages
+    if (mq_unlink(MQ_WRITE_NAME) == -1) {
+        perror("COM | thread_write_fct : Erreur suppression mq_write");
+        exit(EXIT_FAILURE);
     }
     return NULL;
 }
@@ -129,5 +142,15 @@ void *thread_read_fct() {
 }
 
 void com_free(){
+    // Signal aux threads de s'arrêter
+    running = 0;
 
+    // Joindre les threads pour s'assurer qu'ils ont terminé
+    if (pthread_join(thread_write, NULL) != 0) {
+        perror("COM | com_free : erreur pthread_join thread_write");
+    }
+
+    if (pthread_join(thread_read, NULL) != 0) {
+        perror("COM | com_free : erreur pthread_join thread_read");
+    }
 }

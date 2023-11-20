@@ -86,7 +86,7 @@ void *thread_write_fct() {
         } else if (bytes_send > 0){
             // Send a first packet with the lenght of the next packet
             connexion_write(&msg->dlc, 1);
-            printf("COM | thread_write_fct : dlc_send : %d\n", msg->dlc);
+            printf("COM | thread_write_fct : dlc_send : %02X\n", msg->dlc);
 
             // Serialize the message, prepare and send the second packet
             uint8_t *buffer;
@@ -133,9 +133,38 @@ void *thread_write_fct() {
 }
 
 void *thread_read_fct() {
-    // Main
-    while (running){
-        // TODO : coder cette merde
+    while (running) {
+        // Lire la taille du message (2 octets)
+        uint8_t size_buffer[2];
+        connexion_read(size_buffer, sizeof(size_buffer));
+        // Afficher le message reçu pour débogage
+        printf("COM | thread_read_fct : size_buffer reçu : ");
+        for (size_t i = 0; i < sizeof(size_buffer); ++i) {
+            printf("%02X ", size_buffer[i]);
+        }
+        printf("\n");
+
+        // uint16_t message_size = (size_buffer[0] << 8) | size_buffer[1];
+
+        // // Lire le message basé sur la taille lue
+        // uint8_t *message_buffer = malloc(message_size);
+        // if (message_buffer == NULL) {
+        //     perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
+        //     exit(EXIT_FAILURE);
+        // }
+
+        // connexion_read(message_buffer, message_size);
+
+        // // Afficher le message reçu pour débogage
+        // printf("COM | thread_read_fct : Message reçu : ");
+        // for (size_t i = 0; i < message_size; ++i) {
+        //     printf("%02X ", message_buffer[i]);
+        // }
+        // printf("\n");
+
+        // // Libérer le buffer de message
+        // free(message_buffer);
+
         usleep(200);
     }
     return NULL;

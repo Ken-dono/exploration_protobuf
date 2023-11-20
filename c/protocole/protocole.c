@@ -17,7 +17,7 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
     // Sérialisation du message
     *len = battery_level__get_packed_size(&batteryLevel);
 
-    *buffer = malloc(*len);
+     *buffer = malloc(*len);
     if (*buffer == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire\n");
         exit(EXIT_FAILURE);

@@ -7,22 +7,29 @@
 
 void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
 {
-    // Création d'un objet Message
-    BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 
+    switch (message->id) {
+        case 0x04: {
+            // Création d'un objet Message
+            BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 
 
-    // Assignation d'un message
-    batteryLevel.id = message->id;
-    batteryLevel.level = message->payload[0];
+            // Assignation d'un message
+            batteryLevel.id = message->id;
+            batteryLevel.level = message->payload[0];
 
-    // Sérialisation du message
-    *len = battery_level__get_packed_size(&batteryLevel);
+            // Sérialisation du message
+            *len = battery_level__get_packed_size(&batteryLevel);
 
-     *buffer = malloc(*len);
-    if (*buffer == NULL) {
-        fprintf(stderr, "Erreur d'allocation de mémoire\n");
-        exit(EXIT_FAILURE);
+            *buffer = malloc(*len);
+            if (*buffer == NULL) {
+                fprintf(stderr, "Erreur d'allocation de mémoire\n");
+                exit(EXIT_FAILURE);
+            }
+            battery_level__pack(&batteryLevel, *buffer);
+        }
+        default : {
+            fprintf(stderr, "ID non pris en charge\n");
+        }
     }
-    battery_level__pack(&batteryLevel, *buffer);
 }
 
 void protocole_free(uint8_t * buffer){

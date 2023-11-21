@@ -36,8 +36,10 @@ void connexion_init(int server_port){
     socket_serveur_config.sin_addr.s_addr = htonl(INADDR_ANY);
 
     /* Attache le socket au port et aux interfaces configures. */
-    // TODO : Gérer les messages derreurs de bind
-    bind(socket_serveur, (struct sockaddr *)&socket_serveur_config, sizeof(struct sockaddr_in));
+    if (bind(socket_serveur, (struct sockaddr *)&socket_serveur_config, sizeof(struct sockaddr_in)) < 0) {
+        perror("CONNEXION | connexion_init : Erreur lors du bind");
+        exit(EXIT_FAILURE);
+    }
 
     /* Mise en ecoute du socket. */
     listen(socket_serveur, MAX_CONNEXIONS_EN_ATTENTE);

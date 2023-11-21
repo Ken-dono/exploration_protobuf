@@ -180,27 +180,27 @@ void *thread_read_fct() {
         connexion_read(&size_buffer, sizeof(size_buffer));
         // Afficher le message reçu pour débogage
         printf("COM | thread_read_fct : size_buffer reçu : %d\n",size_buffer);
-
+        
         // uint16_t message_size = (size_buffer[0] << 8) | size_buffer[1];
 
-        // // Lire le message basé sur la taille lue
-        // uint8_t *message_buffer = malloc(message_size);
-        // if (message_buffer == NULL) {
-        //     perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
-        //     exit(EXIT_FAILURE);
-        // }
+        // Lire le message basé sur la taille lue
+        uint8_t *message_buffer = malloc(size_buffer);
+        if (message_buffer == NULL) {
+            perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
+            exit(EXIT_FAILURE);
+        }
 
-        // connexion_read(message_buffer, message_size);
+        connexion_read(message_buffer, size_buffer);
 
-        // // Afficher le message reçu pour débogage
-        // printf("COM | thread_read_fct : Message reçu : ");
-        // for (size_t i = 0; i < message_size; ++i) {
-        //     printf("%02X ", message_buffer[i]);
-        // }
-        // printf("\n");
+        // Afficher le message reçu pour débogage
+        printf("COM | thread_read_fct : Message reçu : ");
+        for (size_t i = 0; i < size_buffer; ++i) {
+            printf("%02X ", message_buffer[i]);
+        }
+        printf("\n");
 
-        // // Libérer le buffer de message
-        // free(message_buffer);
+        // Libérer le buffer de message
+        free(message_buffer);
 
         usleep(200);
     }

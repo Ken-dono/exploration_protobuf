@@ -36,6 +36,16 @@ Lancez le serveur avec la commande suivante :
 make run
 ```
 
+Observez les packet transmis avec la commande suivante :
+```sh
+sudo tcpdump -i any tcp port 12345 -X
+```
+
+Simulez un client sur la socket avec la commande suivante :
+```sh
+nc localhost 12345
+```
+
 ## Explication de l'exécution
 
 Lorsque le programme principal `main` est exécuté, il procède comme suit :

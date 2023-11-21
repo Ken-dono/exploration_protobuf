@@ -2,6 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags libprotobuf-c)
 LDFLAGS = $(shell pkg-config --libs libprotobuf-c) -lpthread -lrt
 TARGET = main
+
 PROTO_DIR = proto
 COM_DIR = com
 CONNEXION_DIR = connexion

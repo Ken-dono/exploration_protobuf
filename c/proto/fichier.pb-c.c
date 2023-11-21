@@ -52,23 +52,11 @@ void   battery_level__free_unpacked
   assert(message->base.descriptor == &battery_level__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
-static const ProtobufCFieldDescriptor battery_level__field_descriptors[2] =
+static const ProtobufCFieldDescriptor battery_level__field_descriptors[1] =
 {
   {
-    "id",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_UINT32,
-    0,   /* quantifier_offset */
-    offsetof(BatteryLevel, id),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
     "level",
-    2,
+    1,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -80,13 +68,12 @@ static const ProtobufCFieldDescriptor battery_level__field_descriptors[2] =
   },
 };
 static const unsigned battery_level__field_indices_by_name[] = {
-  0,   /* field[0] = id */
-  1,   /* field[1] = level */
+  0,   /* field[0] = level */
 };
 static const ProtobufCIntRange battery_level__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 2 }
+  { 0, 1 }
 };
 const ProtobufCMessageDescriptor battery_level__descriptor =
 {
@@ -96,7 +83,7 @@ const ProtobufCMessageDescriptor battery_level__descriptor =
   "BatteryLevel",
   "",
   sizeof(BatteryLevel),
-  2,
+  1,
   battery_level__field_descriptors,
   battery_level__field_indices_by_name,
   1,  battery_level__number_ranges,

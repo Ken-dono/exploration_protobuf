@@ -13,7 +13,6 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
             BatteryLevel batteryLevel = BATTERY_LEVEL__INIT; 
 
             // Assignation d'un message
-            batteryLevel.id = message->id;
             batteryLevel.level = message->payload[0];
 
             // Sérialisation du message

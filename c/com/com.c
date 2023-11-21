@@ -137,10 +137,12 @@ void *thread_write_fct() {
                 size_t len;
                 protocole_code(msg, &buffer, &len);
 
-                // Send a first packet with the lenght of the serialized packet
-                uint8_t len_byte = (uint8_t)len;
-                connexion_write(&len_byte, 1);
-                printf("COM | thread_write_fct : size_send : %02X\n", len_byte);
+                // Send a first packet with the lenght and ID of the serialized packet
+                uint8_t payload_descriptor[2];
+                payload_descriptor[0] = (uint8_t)len;
+                payload_descriptor[1] = (uint8_t)msg->id;
+                connexion_write(&payload_descriptor, 2);
+                printf("COM | thread_write_fct : size_send : %02X | id_send : %02X\n", payload_descriptor[0], payload_descriptor[1]);
 
                 // Send the serialized packet
                 connexion_write(buffer, len);
@@ -159,7 +161,7 @@ void *thread_write_fct() {
                     exit(EXIT_FAILURE);
                 }
                 // Traitement du message désérialisé
-                printf("Send : ID : %d | PAYLOAD (level) : %d \n", battery_in->id, battery_in->level);
+                printf("Send : PAYLOAD (level) : %d \n", battery_in->level);
                 // Libération du message désérialisé
                 battery_level__free_unpacked(battery_in, NULL);
 

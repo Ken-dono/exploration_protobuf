@@ -27,17 +27,13 @@ struct  _BatteryLevel
 {
   ProtobufCMessage base;
   /*
-   * ID du message
-   */
-  uint32_t id;
-  /*
    * Niveau de la batterie
    */
   uint32_t level;
 };
 #define BATTERY_LEVEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&battery_level__descriptor) \
-    , 0, 0 }
+    , 0 }
 
 
 /* BatteryLevel methods */

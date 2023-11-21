@@ -83,5 +83,19 @@ ssize_t connexion_write(const uint8_t* data, size_t length) {
     return num_written;
 }
 
-
-
+void connexion_close() {
+    // Fermeture du socket client
+    if (socket_client >= 0) {
+        if (close(socket_client) < 0) {
+            perror("CONNEXION | connexion_close : Erreur lors de la fermeture du socket client");
+        }
+    }
+    printf("CONNEXION | connexion_close : La connexion client a été fermée par le serveur\n");
+    // Fermeture du socket serveur
+    if (socket_serveur >= 0) {
+        if (close(socket_serveur) < 0) {
+            perror("CONNEXION | connexion_close : Erreur lors de la fermeture du socket serveur");
+        }
+    }
+    printf("CONNEXION | connexion_close : La connexion serveur a été fermée par le serveur\n");
+}

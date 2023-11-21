@@ -12,14 +12,14 @@ int main() {
     msg_battery_lvl.id = 0X04;
     msg_battery_lvl.payload[0] = 100;
     com_send_message(&msg_battery_lvl);
-    
+
     // Boucle d'execution avec interruption
     printf("Appuyez sur 'q' pour quitter.\n");
 
     int ch;
     while ((ch = getchar()) != 'q') {}
 
-    printf("Terminaison des threads.\n");
+    com_stop();
     com_free();
     printf("Fin du programme.\n");
     return EXIT_SUCCESS;

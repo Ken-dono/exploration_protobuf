@@ -17,6 +17,11 @@
 void connexion_init();
 
 /**
+ * Close connexion with M_CTRL
+ */
+void connexion_close();
+
+/**
  * Wait for M_CTRL connexion
  * @return the socket number used by M_CTRL
  */

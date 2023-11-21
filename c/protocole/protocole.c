@@ -25,9 +25,11 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
                 exit(EXIT_FAILURE);
             }
             battery_level__pack(&batteryLevel, *buffer);
+            break;
         }
         default : {
             fprintf(stderr, "ID non pris en charge\n");
+            break;
         }
     }
 }

@@ -20,6 +20,8 @@
  */
 void com_init();
 
+void com_free();
+
 /**
  * Send a message to M_CTRL
  * @param msg   The message to send
@@ -27,8 +29,15 @@ void com_init();
 void com_send_message(message_t *msg);
 
 /**
- * Stop connection with M_CTRL
+ * Start threads
  */
-void com_free();
+void com_stop();
+
+/**
+ * Stop threads
+ */
+void com_stop();
+
+
 
 #endif //C_COM_H

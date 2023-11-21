@@ -141,7 +141,7 @@ void *thread_write_fct() {
                 uint8_t payload_descriptor[2];
                 payload_descriptor[0] = (uint8_t)len;
                 payload_descriptor[1] = (uint8_t)msg->id;
-                connexion_write(&payload_descriptor, 2);
+                connexion_write(payload_descriptor, 2);
                 printf("COM | thread_write_fct : size_send : %02X | id_send : %02X\n", payload_descriptor[0], payload_descriptor[1]);
 
                 // Send the serialized packet
@@ -177,35 +177,35 @@ void *thread_write_fct() {
 
 void *thread_read_fct() {
     while (running == 1) {
-        // Lire la taille du message (1 octet)
-        uint8_t size_buffer;
-        connexion_read(&size_buffer, sizeof(size_buffer));
+        // Lire la taille du message (2 octets)
+        uint8_t payload_descriptor_received[2];
+        connexion_read(payload_descriptor_received, 2);
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : size_buffer reçu : %d\n",size_buffer);
-        
-        // uint16_t message_size = (size_buffer[0] << 8) | size_buffer[1];
+        printf("COM | thread_write_fct : size_received : %02X | id_received : %02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
+
 
         // Lire le message basé sur la taille lue
-        uint8_t *message_buffer = malloc(size_buffer);
-        if (message_buffer == NULL) {
+        uint8_t *payload_buffer_received = malloc(payload_descriptor_received[1]);
+        if (payload_buffer_received == NULL) {
             perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
             exit(EXIT_FAILURE);
         }
 
-        connexion_read(message_buffer, size_buffer);
+        connexion_read(payload_buffer_received, payload_descriptor_received[1]);
 
         // Afficher le message reçu pour débogage
         printf("COM | thread_read_fct : Message reçu : ");
-        for (size_t i = 0; i < size_buffer; ++i) {
-            printf("%02X ", message_buffer[i]);
+        for (size_t i = 0; i < payload_descriptor_received[1]; ++i) {
+            printf("%02X ", payload_buffer_received[i]);
         }
         printf("\n");
 
-        // Libérer le buffer de message
-        free(message_buffer);
+        // // Libérer le buffer de message
+        // free(message_buffer);
 
         usleep(200);
     }
     return NULL;
 }
+
 

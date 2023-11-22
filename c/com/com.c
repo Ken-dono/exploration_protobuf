@@ -188,6 +188,7 @@ void *thread_read_fct() {
         printf("\n");
 
         // Libérer le buffer de msg
+        free(buffer);
         free(msg);
 
         usleep(200);

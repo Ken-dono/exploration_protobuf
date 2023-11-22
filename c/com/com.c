@@ -182,8 +182,8 @@ void *thread_read_fct() {
 
         // Afficher le message reçu pour débogage
         printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
-        for (size_t i = 0; i < msg->payload[0]; ++i) {
-            printf("%02X ", msg->payload[0]);
+        for (size_t i = 0; i < len; ++i) {
+            printf("%02X ", buffer[i]);
         }
         printf("\n");
 

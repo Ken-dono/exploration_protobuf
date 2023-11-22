@@ -76,15 +76,46 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             break;
         }
         case 0x03: {
+            StopMarco *stop_marco_in = stop_marco__unpack(NULL, len, buffer);
+            if (stop_marco_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                exit(EXIT_FAILURE);
+            }
+            message->payload[0] = stop_marco_in->state;
+            stop_marco__free_unpacked(stop_marco_in, NULL);
             break;
         }
         case 0x05: {
+            DeplacementManuel *deplacement_manuel_in = deplacement_manuel__unpack(NULL, len, buffer);
+            if (deplacement_manuel_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                exit(EXIT_FAILURE);
+            }
+            message->payload[0] = deplacement_manuel_in->direction;
+            message->payload[1] = deplacement_manuel_in->speed;
+            deplacement_manuel__free_unpacked(deplacement_manuel_in, NULL);
             break;
         }
         case 0x07: {
+            SetExploAlgo *set_explo_algo_in = set_explo_algo__unpack(NULL, len, buffer);
+            if (set_explo_algo_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                exit(EXIT_FAILURE);
+            }
+            message->payload[0] = set_explo_algo_in->algo;
+            set_explo_algo__free_unpacked(set_explo_algo_in, NULL);
             break;
         }
         case 0x09: {
+            SetExploParam *set_explo_param_in = set_explo_param__unpack(NULL, len, buffer);
+            if (set_explo_param_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                exit(EXIT_FAILURE);
+            }
+            message->payload[0] = set_explo_param_in->type;
+            message->payload[1] = set_explo_param_in->isenable;
+            message->payload[2] = set_explo_param_in->value;
+            set_explo_param__free_unpacked(set_explo_param_in, NULL);
             break;
         }
         default : {

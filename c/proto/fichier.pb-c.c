@@ -562,7 +562,7 @@ static const ProtobufCFieldDescriptor status_explo__field_descriptors[3] =
     "temps",
     3,
     PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_FLOAT,
+    PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
     offsetof(StatusExplo, temps),
     NULL,
@@ -715,7 +715,7 @@ static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[3] =
     "value",
     3,
     PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_FLOAT,
+    PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
     offsetof(SetExploParam, value),
     NULL,

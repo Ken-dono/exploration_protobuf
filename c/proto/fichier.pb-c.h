@@ -100,7 +100,7 @@ struct  _StatusExplo
   /*
    * temps
    */
-  float temps;
+  uint32_t temps;
 };
 #define STATUS_EXPLO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&status_explo__descriptor) \
@@ -151,7 +151,7 @@ struct  _SetExploParam
   /*
    * value
    */
-  float value;
+  uint32_t value;
 };
 #define SET_EXPLO_PARAM__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&set_explo_param__descriptor) \

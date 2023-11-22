@@ -54,6 +54,7 @@ void com_stop(){
     running = 0;
 
     message_t msg_stop;
+    msg_stop.dlc = 0x02;
     msg_stop.id = 0XAA;
     msg_stop.payload[0] = 100;
     com_send_message(&msg_stop);
@@ -113,14 +114,12 @@ void com_free(){
 
 void *thread_write_fct() {
     while (running == 1){
-        printf("COM | thread_write_fct : start\n");
         // Read message queue
         message_t *msg = malloc(sizeof(message_t));
         if (msg == NULL) {
             perror("COM | thread_write_fct : Erreur d'allocation de mémoire\n");
             exit(EXIT_FAILURE);
         }
-        printf("COM | thread_write_fct : msg alloué avec succès\n");
         ssize_t bytes_send = mq_receive(mq_write, ( char *) msg, sizeof(message_t), NULL);
         if (msg->id==0xAA)
         {
@@ -153,16 +152,19 @@ void *thread_write_fct() {
                 }
                 printf("\n");
 
-                // DEBUG : Désérialisation du message pour vérification
-                DeplacementManuel *deplacement_manuel_in = deplacement_manuel__unpack(NULL, len, buffer);
-                if (deplacement_manuel_in == NULL) {
-                    fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
-                    exit(EXIT_FAILURE);
-                }
-                // Traitement du message désérialisé
-                printf("Send : PAYLOAD (direction) : %02X | PAYLOAD (speed) : %d \n", deplacement_manuel_in->direction, deplacement_manuel_in->speed );
-                // Libération du message désérialisé
-                deplacement_manuel__free_unpacked(deplacement_manuel_in, NULL);
+                // // DEBUG : Désérialisation du message pour vérification
+                // StatusExplo *status_explo_in = status_explo__unpack(NULL, len, buffer);
+                // if (status_explo_in == NULL) {
+                //     fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                //     exit(EXIT_FAILURE);
+                // }
+                // // Traitement du message désérialisé
+                // printf("Send : PAYLOAD (status) : %d | PAYLOAD (pourcentage) : %d | PAYLOAD (temps) : %d \n"
+                //     , status_explo_in->status
+                //     , status_explo_in->pourcentage
+                //     , status_explo_in->temps);
+                // // Libération du message désérialisé
+                // status_explo__free_unpacked(status_explo_in, NULL);
 
                 // Free the buffer
                 protocole_free(buffer);
@@ -182,25 +184,29 @@ void *thread_read_fct() {
         // Afficher le message reçu pour débogage
         printf("COM | thread_write_fct : size_received : %02X | id_received : %02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
 
+        message_t *message_buffer_received = malloc(sizeof(message_t));
+        message_buffer_received->id = payload_descriptor_received[1];
 
         // Lire le message basé sur la taille lue
-        uint8_t *payload_buffer_received = malloc(payload_descriptor_received[1]);
+        uint8_t *payload_buffer_received = malloc(payload_descriptor_received[0]);
         if (payload_buffer_received == NULL) {
             perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
             exit(EXIT_FAILURE);
         }
 
-        connexion_read(payload_buffer_received, payload_descriptor_received[1]);
+        connexion_read(payload_buffer_received, payload_descriptor_received[0]);
 
         // Afficher le message reçu pour débogage
         printf("COM | thread_read_fct : Message reçu : ");
-        for (size_t i = 0; i < payload_descriptor_received[1]; ++i) {
-            printf("%02X ", payload_buffer_received[i]);
+        for (size_t i = 0; i < payload_descriptor_received[0]; ++i) {
+            printf("%02X ", payload_buffer_received[0]);
         }
         printf("\n");
 
-        // // Libérer le buffer de message
-        // free(message_buffer);
+        // Libérer le buffer de payload_buffer_received
+        free(payload_buffer_received);
+        // Libérer le buffer de message_buffer_received
+        free(message_buffer_received);
 
         usleep(200);
     }

@@ -20,7 +20,7 @@ message deplacement_manuel {
 message status_explo {
   uint32 status = 1;            // StatusEnum
   uint32 pourcentage = 2;       // pourcentage
-  float temps = 3;              // temps
+  uint32 temps = 3;              // temps
 }
 
 message set_explo_algo {
@@ -35,5 +35,5 @@ message position {
 message set_explo_param {
   uint32 type = 1;              // Type
   uint32 isEnable = 2;          // isEnable
-  float value = 3;              // value
+  uint32 value = 3;              // value
 }

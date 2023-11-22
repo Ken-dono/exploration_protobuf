@@ -27,7 +27,7 @@ int main() {
             message_t battery_level;
             battery_level.dlc = 0x02;
             battery_level.id = 0X04;
-            battery_level.payload[0] = 70;
+            battery_level.payload[0] = 255;
             com_send_message(&battery_level);
         } else if (strcmp(input, "06") == 0) {
             // Exemple d'envoi de message : status_explo 20% 450s

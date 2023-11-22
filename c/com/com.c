@@ -136,11 +136,11 @@ void *thread_write_fct() {
                 protocole_code(msg, &buffer, &len);
 
                 // Send a first packet with the lenght and ID of the serialized packet
-                uint8_t payload_descriptor[2];
-                payload_descriptor[0] = (uint8_t)len;
-                payload_descriptor[1] = (uint8_t)msg->id;
-                connexion_write(payload_descriptor, 2);
-                printf("COM | thread_write_fct : size_send : %02X | id_send : %02X\n", payload_descriptor[0], payload_descriptor[1]);
+                uint8_t payload_descriptor_send[2];
+                payload_descriptor_send[0] = (uint8_t)len;
+                payload_descriptor_send[1] = (uint8_t)msg->id;
+                connexion_write(payload_descriptor_send, 2);
+                printf("COM | thread_write_fct : size_send : %02X | id_send : %02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
 
                 // Send the serialized packet
                 connexion_write(buffer, len);
@@ -151,20 +151,6 @@ void *thread_write_fct() {
                     printf("%02X ", buffer[i]);
                 }
                 printf("\n");
-
-                // // DEBUG : Désérialisation du message pour vérification
-                // StatusExplo *status_explo_in = status_explo__unpack(NULL, len, buffer);
-                // if (status_explo_in == NULL) {
-                //     fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
-                //     exit(EXIT_FAILURE);
-                // }
-                // // Traitement du message désérialisé
-                // printf("Send : PAYLOAD (status) : %d | PAYLOAD (pourcentage) : %d | PAYLOAD (temps) : %d \n"
-                //     , status_explo_in->status
-                //     , status_explo_in->pourcentage
-                //     , status_explo_in->temps);
-                // // Libération du message désérialisé
-                // status_explo__free_unpacked(status_explo_in, NULL);
 
                 // Free the buffer
                 protocole_free(buffer);
@@ -184,30 +170,25 @@ void *thread_read_fct() {
         // Afficher le message reçu pour débogage
         printf("COM | thread_write_fct : size_received : %02X | id_received : %02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
 
-        message_t *message_buffer_received = malloc(sizeof(message_t));
-        message_buffer_received->id = payload_descriptor_received[1];
+        message_t *msg = malloc(sizeof(message_t));
+        msg->id = payload_descriptor_received[1];
 
         // Lire le message basé sur la taille lue
-        uint8_t *payload_buffer_received = malloc(payload_descriptor_received[0]);
-        if (payload_buffer_received == NULL) {
-            perror("COM | thread_read_fct : Erreur d'allocation de mémoire pour message_buffer\n");
-            exit(EXIT_FAILURE);
-        }
+        size_t len = (size_t) payload_descriptor_received[0];
+        uint8_t *buffer = malloc(len);
+        connexion_read(buffer, len);
 
-        connexion_read(payload_buffer_received, payload_descriptor_received[0]);
-        protocole_decode(&message_buffer_received, &payload_buffer_received, payload_descriptor_received[0]);
+        protocole_decode(msg, buffer, len);
 
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", message_buffer_received->id);
-        for (size_t i = 0; i < message_buffer_received->payload[0]; ++i) {
-            printf("%02X ", message_buffer_received->payload[0]);
+        printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
+        for (size_t i = 0; i < msg->payload[0]; ++i) {
+            printf("%02X ", msg->payload[0]);
         }
         printf("\n");
 
-        // Libérer le buffer de payload_buffer_received
-        free(payload_buffer_received);
-        // Libérer le buffer de message_buffer_received
-        free(message_buffer_received);
+        // Libérer le buffer de msg
+        free(msg);
 
         usleep(200);
     }

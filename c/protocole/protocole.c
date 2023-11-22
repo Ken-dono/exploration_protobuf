@@ -59,7 +59,7 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
     }
 }
 
-void protocole_decode(message_t ** message, uint8_t ** buffer, size_t len){
+void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
     printf("PROTOCOLE | protocole_decode : size_received : %ld | id_received : %02X\n", len, message->id);
     switch (message->id) {
         case 0x01: {

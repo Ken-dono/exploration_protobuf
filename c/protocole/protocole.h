@@ -40,7 +40,7 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len);
  * @param buffer    the buffer that will contain the encoded frame
  * @param len       the buffer lenght
  */
-void protocole_decode(message_t ** message, uint8_t ** buffer, size_t len);
+void protocole_decode(message_t *message, uint8_t *buffer, size_t len);
 
 void protocole_free(uint8_t * buffer);
 

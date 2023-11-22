@@ -15,6 +15,7 @@ PROTOBUF_C__BEGIN_DECLS
 #endif
 
 
+typedef struct _ArretUrgence ArretUrgence;
 typedef struct _BatteryLevel BatteryLevel;
 
 
@@ -22,6 +23,19 @@ typedef struct _BatteryLevel BatteryLevel;
 
 
 /* --- messages --- */
+
+struct  _ArretUrgence
+{
+  ProtobufCMessage base;
+  /*
+   * Niveau de la batterie
+   */
+  uint32_t level;
+};
+#define ARRET_URGENCE__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&arret_urgence__descriptor) \
+    , 0 }
+
 
 struct  _BatteryLevel
 {
@@ -36,6 +50,25 @@ struct  _BatteryLevel
     , 0 }
 
 
+/* ArretUrgence methods */
+void   arret_urgence__init
+                     (ArretUrgence         *message);
+size_t arret_urgence__get_packed_size
+                     (const ArretUrgence   *message);
+size_t arret_urgence__pack
+                     (const ArretUrgence   *message,
+                      uint8_t             *out);
+size_t arret_urgence__pack_to_buffer
+                     (const ArretUrgence   *message,
+                      ProtobufCBuffer     *buffer);
+ArretUrgence *
+       arret_urgence__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   arret_urgence__free_unpacked
+                     (ArretUrgence *message,
+                      ProtobufCAllocator *allocator);
 /* BatteryLevel methods */
 void   battery_level__init
                      (BatteryLevel         *message);
@@ -57,6 +90,9 @@ void   battery_level__free_unpacked
                       ProtobufCAllocator *allocator);
 /* --- per-message closures --- */
 
+typedef void (*ArretUrgence_Closure)
+                 (const ArretUrgence *message,
+                  void *closure_data);
 typedef void (*BatteryLevel_Closure)
                  (const BatteryLevel *message,
                   void *closure_data);
@@ -66,6 +102,7 @@ typedef void (*BatteryLevel_Closure)
 
 /* --- descriptors --- */
 
+extern const ProtobufCMessageDescriptor arret_urgence__descriptor;
 extern const ProtobufCMessageDescriptor battery_level__descriptor;
 
 PROTOBUF_C__END_DECLS

@@ -1,5 +1,39 @@
 syntax = "proto3";
 
-message BatteryLevel {
-  uint32 level = 1;   // Niveau de la batterie
+message arret_urgence {
+  uint32 state = 1;             // État de l'arrêt d'urgence
+}
+
+message stop_marco {
+  uint32 state = 1;             // État de l'arrêt de MARCO
+} 
+
+message battery_level {
+  uint32 level = 1;             // Niveau de la batterie
+}
+
+message deplacement_manuel {
+  uint32 direction = 1;         // Direction du déplacement
+  uint32 speed = 2;             // Vitesse du déplacement
+}
+
+message status_explo {
+  uint32 status = 1;            // StatusEnum
+  uint32 pourcentage = 2;       // pourcentage
+  uint64 temps = 3;             // temps
+}
+
+message set_explo_algo {
+  uint32 algo = 1;              // Algo
+}
+
+message position {
+  uint64 x = 1;                 // Position X
+  uint64 y = 1;                 // Position Y
+}
+
+message set_explo_param {
+  uint32 type = 1;              // Type
+  uint32 isEnable = 2;          // isEnable
+  uint64 value = 3;             // value
 }

@@ -7,6 +7,51 @@
 #endif
 
 #include "fichier.pb-c.h"
+void   arret_urgence__init
+                     (ArretUrgence         *message)
+{
+  static const ArretUrgence init_value = ARRET_URGENCE__INIT;
+  *message = init_value;
+}
+size_t arret_urgence__get_packed_size
+                     (const ArretUrgence *message)
+{
+  assert(message->base.descriptor == &arret_urgence__descriptor);
+  return protobuf_c_message_get_packed_size ((const ProtobufCMessage*)(message));
+}
+size_t arret_urgence__pack
+                     (const ArretUrgence *message,
+                      uint8_t       *out)
+{
+  assert(message->base.descriptor == &arret_urgence__descriptor);
+  return protobuf_c_message_pack ((const ProtobufCMessage*)message, out);
+}
+size_t arret_urgence__pack_to_buffer
+                     (const ArretUrgence *message,
+                      ProtobufCBuffer *buffer)
+{
+  assert(message->base.descriptor == &arret_urgence__descriptor);
+  return protobuf_c_message_pack_to_buffer ((const ProtobufCMessage*)message, buffer);
+}
+ArretUrgence *
+       arret_urgence__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data)
+{
+  return (ArretUrgence *)
+     protobuf_c_message_unpack (&arret_urgence__descriptor,
+                                allocator, len, data);
+}
+void   arret_urgence__free_unpacked
+                     (ArretUrgence *message,
+                      ProtobufCAllocator *allocator)
+{
+  if(!message)
+    return;
+  assert(message->base.descriptor == &arret_urgence__descriptor);
+  protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
+}
 void   battery_level__init
                      (BatteryLevel         *message)
 {
@@ -52,6 +97,44 @@ void   battery_level__free_unpacked
   assert(message->base.descriptor == &battery_level__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
+static const ProtobufCFieldDescriptor arret_urgence__field_descriptors[1] =
+{
+  {
+    "level",
+    1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(ArretUrgence, level),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+};
+static const unsigned arret_urgence__field_indices_by_name[] = {
+  0,   /* field[0] = level */
+};
+static const ProtobufCIntRange arret_urgence__number_ranges[1 + 1] =
+{
+  { 1, 0 },
+  { 0, 1 }
+};
+const ProtobufCMessageDescriptor arret_urgence__descriptor =
+{
+  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
+  "arret_urgence",
+  "ArretUrgence",
+  "ArretUrgence",
+  "",
+  sizeof(ArretUrgence),
+  1,
+  arret_urgence__field_descriptors,
+  arret_urgence__field_indices_by_name,
+  1,  arret_urgence__number_ranges,
+  (ProtobufCMessageInit) arret_urgence__init,
+  NULL,NULL,NULL    /* reserved[123] */
+};
 static const ProtobufCFieldDescriptor battery_level__field_descriptors[1] =
 {
   {
@@ -78,7 +161,7 @@ static const ProtobufCIntRange battery_level__number_ranges[1 + 1] =
 const ProtobufCMessageDescriptor battery_level__descriptor =
 {
   PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "BatteryLevel",
+  "battery_level",
   "BatteryLevel",
   "BatteryLevel",
   "",

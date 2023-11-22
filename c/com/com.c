@@ -195,11 +195,12 @@ void *thread_read_fct() {
         }
 
         connexion_read(payload_buffer_received, payload_descriptor_received[0]);
+        protocole_decode(&message_buffer_received, &payload_buffer_received, payload_descriptor_received[0]);
 
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : Message reçu : ");
-        for (size_t i = 0; i < payload_descriptor_received[0]; ++i) {
-            printf("%02X ", payload_buffer_received[0]);
+        printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", message_buffer_received->id);
+        for (size_t i = 0; i < message_buffer_received->payload[0]; ++i) {
+            printf("%02X ", message_buffer_received->payload[0]);
         }
         printf("\n");
 

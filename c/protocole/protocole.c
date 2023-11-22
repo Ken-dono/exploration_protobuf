@@ -59,6 +59,41 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t * len)
     }
 }
 
+void protocole_decode(message_t ** message, uint8_t ** buffer, size_t len){
+    printf("PROTOCOLE | protocole_decode : size_received : %ld | id_received : %02X\n", len, message->id);
+    switch (message->id) {
+        case 0x01: {
+            // Désérialisation du message
+            ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, len, buffer);
+            if (arret_urgence_in == NULL) {
+                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                exit(EXIT_FAILURE);
+            }
+            // Mise à jour du payload du message
+            message->payload[0] = arret_urgence_in->state;
+            // Libération du message désérialisé
+            arret_urgence__free_unpacked(arret_urgence_in, NULL);
+            break;
+        }
+        case 0x03: {
+            break;
+        }
+        case 0x05: {
+            break;
+        }
+        case 0x07: {
+            break;
+        }
+        case 0x09: {
+            break;
+        }
+        default : {
+            fprintf(stderr, "ID non pris en charge\n");
+            break;
+        }
+    }
+}
+
 void protocole_free(uint8_t * buffer){
     free(buffer);
 }

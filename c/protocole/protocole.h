@@ -34,6 +34,14 @@ typedef struct
  */
 void protocole_code(message_t * message, uint8_t ** buffer, size_t * len);
 
+/**
+ * Decode a message to send it on the network as a frame
+ * @param message   the message to send
+ * @param buffer    the buffer that will contain the encoded frame
+ * @param len       the buffer lenght
+ */
+void protocole_decode(message_t ** message, uint8_t ** buffer, size_t len);
+
 void protocole_free(uint8_t * buffer);
 
 #endif //C_PROTOCOLE_H

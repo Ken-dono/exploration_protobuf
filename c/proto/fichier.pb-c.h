@@ -16,7 +16,13 @@ PROTOBUF_C__BEGIN_DECLS
 
 
 typedef struct _ArretUrgence ArretUrgence;
+typedef struct _StopMarco StopMarco;
 typedef struct _BatteryLevel BatteryLevel;
+typedef struct _DeplacementManuel DeplacementManuel;
+typedef struct _StatusExplo StatusExplo;
+typedef struct _SetExploAlgo SetExploAlgo;
+typedef struct _Position Position;
+typedef struct _SetExploParam SetExploParam;
 
 
 /* --- enums --- */
@@ -28,12 +34,25 @@ struct  _ArretUrgence
 {
   ProtobufCMessage base;
   /*
-   * Niveau de la batterie
+   * État de l'arrêt d'urgence
    */
-  uint32_t level;
+  uint32_t state;
 };
 #define ARRET_URGENCE__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&arret_urgence__descriptor) \
+    , 0 }
+
+
+struct  _StopMarco
+{
+  ProtobufCMessage base;
+  /*
+   * État de l'arrêt de MARCO
+   */
+  uint32_t state;
+};
+#define STOP_MARCO__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&stop_marco__descriptor) \
     , 0 }
 
 
@@ -48,6 +67,95 @@ struct  _BatteryLevel
 #define BATTERY_LEVEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&battery_level__descriptor) \
     , 0 }
+
+
+struct  _DeplacementManuel
+{
+  ProtobufCMessage base;
+  /*
+   * Direction du déplacement
+   */
+  uint32_t direction;
+  /*
+   * Vitesse du déplacement
+   */
+  uint32_t speed;
+};
+#define DEPLACEMENT_MANUEL__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&deplacement_manuel__descriptor) \
+    , 0, 0 }
+
+
+struct  _StatusExplo
+{
+  ProtobufCMessage base;
+  /*
+   * StatusEnum
+   */
+  uint32_t status;
+  /*
+   * pourcentage
+   */
+  uint32_t pourcentage;
+  /*
+   * temps
+   */
+  float temps;
+};
+#define STATUS_EXPLO__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&status_explo__descriptor) \
+    , 0, 0, 0 }
+
+
+struct  _SetExploAlgo
+{
+  ProtobufCMessage base;
+  /*
+   * Algo
+   */
+  uint32_t algo;
+};
+#define SET_EXPLO_ALGO__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&set_explo_algo__descriptor) \
+    , 0 }
+
+
+struct  _Position
+{
+  ProtobufCMessage base;
+  /*
+   * Position X (mm)
+   */
+  uint32_t x;
+  /*
+   * Position Y (mm)
+   */
+  uint32_t y;
+};
+#define POSITION__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&position__descriptor) \
+    , 0, 0 }
+
+
+struct  _SetExploParam
+{
+  ProtobufCMessage base;
+  /*
+   * Type
+   */
+  uint32_t type;
+  /*
+   * isEnable
+   */
+  uint32_t isenable;
+  /*
+   * value
+   */
+  float value;
+};
+#define SET_EXPLO_PARAM__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&set_explo_param__descriptor) \
+    , 0, 0, 0 }
 
 
 /* ArretUrgence methods */
@@ -69,6 +177,25 @@ ArretUrgence *
 void   arret_urgence__free_unpacked
                      (ArretUrgence *message,
                       ProtobufCAllocator *allocator);
+/* StopMarco methods */
+void   stop_marco__init
+                     (StopMarco         *message);
+size_t stop_marco__get_packed_size
+                     (const StopMarco   *message);
+size_t stop_marco__pack
+                     (const StopMarco   *message,
+                      uint8_t             *out);
+size_t stop_marco__pack_to_buffer
+                     (const StopMarco   *message,
+                      ProtobufCBuffer     *buffer);
+StopMarco *
+       stop_marco__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   stop_marco__free_unpacked
+                     (StopMarco *message,
+                      ProtobufCAllocator *allocator);
 /* BatteryLevel methods */
 void   battery_level__init
                      (BatteryLevel         *message);
@@ -88,13 +215,126 @@ BatteryLevel *
 void   battery_level__free_unpacked
                      (BatteryLevel *message,
                       ProtobufCAllocator *allocator);
+/* DeplacementManuel methods */
+void   deplacement_manuel__init
+                     (DeplacementManuel         *message);
+size_t deplacement_manuel__get_packed_size
+                     (const DeplacementManuel   *message);
+size_t deplacement_manuel__pack
+                     (const DeplacementManuel   *message,
+                      uint8_t             *out);
+size_t deplacement_manuel__pack_to_buffer
+                     (const DeplacementManuel   *message,
+                      ProtobufCBuffer     *buffer);
+DeplacementManuel *
+       deplacement_manuel__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   deplacement_manuel__free_unpacked
+                     (DeplacementManuel *message,
+                      ProtobufCAllocator *allocator);
+/* StatusExplo methods */
+void   status_explo__init
+                     (StatusExplo         *message);
+size_t status_explo__get_packed_size
+                     (const StatusExplo   *message);
+size_t status_explo__pack
+                     (const StatusExplo   *message,
+                      uint8_t             *out);
+size_t status_explo__pack_to_buffer
+                     (const StatusExplo   *message,
+                      ProtobufCBuffer     *buffer);
+StatusExplo *
+       status_explo__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   status_explo__free_unpacked
+                     (StatusExplo *message,
+                      ProtobufCAllocator *allocator);
+/* SetExploAlgo methods */
+void   set_explo_algo__init
+                     (SetExploAlgo         *message);
+size_t set_explo_algo__get_packed_size
+                     (const SetExploAlgo   *message);
+size_t set_explo_algo__pack
+                     (const SetExploAlgo   *message,
+                      uint8_t             *out);
+size_t set_explo_algo__pack_to_buffer
+                     (const SetExploAlgo   *message,
+                      ProtobufCBuffer     *buffer);
+SetExploAlgo *
+       set_explo_algo__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   set_explo_algo__free_unpacked
+                     (SetExploAlgo *message,
+                      ProtobufCAllocator *allocator);
+/* Position methods */
+void   position__init
+                     (Position         *message);
+size_t position__get_packed_size
+                     (const Position   *message);
+size_t position__pack
+                     (const Position   *message,
+                      uint8_t             *out);
+size_t position__pack_to_buffer
+                     (const Position   *message,
+                      ProtobufCBuffer     *buffer);
+Position *
+       position__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   position__free_unpacked
+                     (Position *message,
+                      ProtobufCAllocator *allocator);
+/* SetExploParam methods */
+void   set_explo_param__init
+                     (SetExploParam         *message);
+size_t set_explo_param__get_packed_size
+                     (const SetExploParam   *message);
+size_t set_explo_param__pack
+                     (const SetExploParam   *message,
+                      uint8_t             *out);
+size_t set_explo_param__pack_to_buffer
+                     (const SetExploParam   *message,
+                      ProtobufCBuffer     *buffer);
+SetExploParam *
+       set_explo_param__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   set_explo_param__free_unpacked
+                     (SetExploParam *message,
+                      ProtobufCAllocator *allocator);
 /* --- per-message closures --- */
 
 typedef void (*ArretUrgence_Closure)
                  (const ArretUrgence *message,
                   void *closure_data);
+typedef void (*StopMarco_Closure)
+                 (const StopMarco *message,
+                  void *closure_data);
 typedef void (*BatteryLevel_Closure)
                  (const BatteryLevel *message,
+                  void *closure_data);
+typedef void (*DeplacementManuel_Closure)
+                 (const DeplacementManuel *message,
+                  void *closure_data);
+typedef void (*StatusExplo_Closure)
+                 (const StatusExplo *message,
+                  void *closure_data);
+typedef void (*SetExploAlgo_Closure)
+                 (const SetExploAlgo *message,
+                  void *closure_data);
+typedef void (*Position_Closure)
+                 (const Position *message,
+                  void *closure_data);
+typedef void (*SetExploParam_Closure)
+                 (const SetExploParam *message,
                   void *closure_data);
 
 /* --- services --- */
@@ -103,7 +343,13 @@ typedef void (*BatteryLevel_Closure)
 /* --- descriptors --- */
 
 extern const ProtobufCMessageDescriptor arret_urgence__descriptor;
+extern const ProtobufCMessageDescriptor stop_marco__descriptor;
 extern const ProtobufCMessageDescriptor battery_level__descriptor;
+extern const ProtobufCMessageDescriptor deplacement_manuel__descriptor;
+extern const ProtobufCMessageDescriptor status_explo__descriptor;
+extern const ProtobufCMessageDescriptor set_explo_algo__descriptor;
+extern const ProtobufCMessageDescriptor position__descriptor;
+extern const ProtobufCMessageDescriptor set_explo_param__descriptor;
 
 PROTOBUF_C__END_DECLS
 

@@ -29,7 +29,7 @@ message set_explo_algo {
 
 message position {
   uint32 x = 1;                 // Position X (mm)
-  uint32 y = 1;                 // Position Y (mm)
+  uint32 y = 2;                 // Position Y (mm)
 }
 
 message set_explo_param {

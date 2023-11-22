@@ -5,7 +5,7 @@
 #ifndef C_PROTOCOLE_H
 #define C_PROTOCOLE_H
 
-#define MAX_MSG_SIZE 27
+#define MAX_MSG_SIZE 26
 #define MAX_MESSAGES 200
 #define SERVER_PORT 12345
 #define MAX_CONNEXIONS_EN_ATTENTE 5
@@ -21,7 +21,6 @@
  */
 typedef struct
 {
-    uint8_t dlc;
     uint32_t id;
     uint32_t payload[MAX_MSG_SIZE];
 } message_t;

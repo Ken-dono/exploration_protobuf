@@ -54,7 +54,6 @@ void com_stop(){
     running = 0;
 
     message_t msg_stop;
-    msg_stop.dlc = 0x02;
     msg_stop.id = 0XAA;
     msg_stop.payload[0] = 100;
     com_send_message(&msg_stop);
@@ -155,15 +154,15 @@ void *thread_write_fct() {
                 printf("\n");
 
                 // DEBUG : Désérialisation du message pour vérification
-                BatteryLevel *battery_in = battery_level__unpack(NULL, len, buffer);
-                if (battery_in == NULL) {
+                DeplacementManuel *deplacement_manuel_in = deplacement_manuel__unpack(NULL, len, buffer);
+                if (deplacement_manuel_in == NULL) {
                     fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
                     exit(EXIT_FAILURE);
                 }
                 // Traitement du message désérialisé
-                printf("Send : PAYLOAD (level) : %d \n", battery_in->level);
+                printf("Send : PAYLOAD (direction) : %02X | PAYLOAD (speed) : %d \n", deplacement_manuel_in->direction, deplacement_manuel_in->speed );
                 // Libération du message désérialisé
-                battery_level__free_unpacked(battery_in, NULL);
+                deplacement_manuel__free_unpacked(deplacement_manuel_in, NULL);
 
                 // Free the buffer
                 protocole_free(buffer);

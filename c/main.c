@@ -7,11 +7,11 @@ int main() {
     com_init();
 
     // Exemple d'envoi de message : message batterie 20%
-    message_t msg_battery_lvl;
-    msg_battery_lvl.dlc = 0x02;
-    msg_battery_lvl.id = 0X04;
-    msg_battery_lvl.payload[0] = 100;
-    com_send_message(&msg_battery_lvl);
+    message_t deplacement_manuel;
+    deplacement_manuel.id = 0X05;
+    deplacement_manuel.payload[0] = 0xFF;
+    deplacement_manuel.payload[1] = 100;
+    com_send_message(&deplacement_manuel);
 
     // Boucle d'execution avec interruption
     printf("Appuyez sur 'q' pour quitter.\n");

@@ -178,6 +178,13 @@ void *thread_read_fct() {
         uint8_t *buffer = malloc(len);
         connexion_read(buffer, len);
 
+        // Afficher le message reçu pour débogage
+        printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
+        for (size_t i = 0; i < len; ++i) {
+            printf("%02X ", buffer[i]);
+        }
+        printf("\n");
+
         protocole_decode(msg, buffer, len);
 
         // Afficher le message reçu pour débogage

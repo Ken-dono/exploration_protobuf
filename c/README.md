@@ -1,32 +1,76 @@
 # Mini-Projet d'Exploration Protobuf avec Communication en C
 
+- [Description](#description)
+- [Exploration et Ressources](#exploration-et-ressources)
+- [Fonctionnalités](#fonctionnalités)
+- [Installation](#installation)
+- [Structure du Projet](#structure-du-projet)
+- [Utilisation](#utilisation)
+- [Explication de l'exécution](#explication-de-lexécution)
+
 ## Description
 
 Ce mini-projet démontre l'utilisation de Protocol Buffers (protobuf) pour sérialiser et désérialiser des données structurées, ainsi que l'établissement d'une communication réseau via des sockets TCP en C. Le projet inclut un exemple de définition protobuf et de mise en œuvre côté serveur et client pour l'envoi et la réception de messages sérialisés.
 
+## Exploration et Ressources
+
+Pour le développement de ce mini-projet, plusieurs ressources concernant les Protocol Buffers (protobuf) en C et les techniques de communication réseau ont été consultées. Les sources principales incluent :
+
+- **Protobuf-C GitHub Repository** :
+  - [GitHub - protobuf-c/protobuf-c](https://github.com/protobuf-c/protobuf-c) : Le dépôt officiel de Protobuf-C, contenant le code source et la documentation.
+
+- **Documentation Officielle Protobuf-C** :
+  - [Protobuf-C](https://protobuf-c.github.io/protobuf-c/) : Documentation officielle de Protobuf-C, détaillant son utilisation en C.
+
+- **Wikis et Guides Protobuf-C** :
+  - [Protobuf-C Wiki](https://github.com/protobuf-c/protobuf-c/wiki) : Informations sur les concepts de base et fonctionnalités avancées de Protobuf-C.
+  - [Exemples Protobuf-C](https://github.com/protobuf-c/protobuf-c/wiki/Examples) : Exemples pratiques montrant l'usage de Protobuf-C pour la sérialisation et la désérialisation.
+
+- **Forum Protobuf-C** :
+  - [Google Group - Protobuf-C](https://groups.google.com/forum/#!forum/protobuf-c) : Un forum dédié aux discussions sur Protobuf-C, avec des contributions de développeurs et utilisateurs.
+
+Ces ressources ont été utilisées pour acquérir des connaissances et résoudre des problèmes techniques spécifiques rencontrés pendant le développement du projet.
+
+
 ## Fonctionnalités
-
-- Définition d'un message protobuf simple avec un champ texte.
-- Compilation de la définition protobuf en code source C.
-- Mise en place d'un serveur socket TCP pour écouter les connexions entrantes.
-- Envoi et réception de messages sérialisés à travers le réseau.
-
-## Structure du Projet
-
-- `fichier.proto` : Définition du message protobuf.
-- `fichier.pb-c.c`, `fichier.pb-c.h` : Fichiers sources C générés à partir de `fichier.proto`.
-- `main.c` : Programme principal qui sérialise et envoie un message, puis attend et désérialise la réponse.
-- `com.c`, `com.h` : Bibliothèque personnalisée pour gérer la communication réseau.
-- `Makefile` : Fichier utilisé pour automatiser la compilation et la création du projet.
+- Communication TCP/IP basique entre le client et le serveur.
+- Utilisation de Protobuf pour la sérialisation et la désérialisation des messages.
+- Gestion de différents types de messages (par exemple, `battery_level`, `status_explo`, `position`).
+- Interaction utilisateur pour choisir et envoyer des messages spécifiques.
+- Gestion des threads pour la lecture et l'écriture des messages.
 
 ## Installation
 
 Assurez-vous d'avoir les paquets suivants installés :
-- `protobuf-c-compiler` : Le compilateur pour Protocol Buffers.
-- `libprotobuf-c-dev` : Les bibliothèques de développement pour protobuf en C.
-- `pkg-config`
+- `protobuf-c-compiler` : Le compilateur pour Protocol Buffers, nécessaire pour compiler les fichiers `.proto`.
+- `libprotobuf-c-dev` : Les bibliothèques de développement pour protobuf en C, fournissant les en-têtes et les bibliothèques nécessaires pour la compilation.
+- `pkg-config` : Un outil de gestion de la configuration des paquets logiciels, utilisé pour récupérer les drapeaux de compilation et de liaison nécessaires pour les bibliothèques installées sur votre système.
 
+Pour installer ces dépendances sous Debian/Ubuntu, utilisez la commande suivante :
+
+```bash
+sudo apt-get install protobuf-c-compiler libprotobuf-c-dev pkg-config
+```
 Pour compiler le projet, utilisez la commande `make` à la racine du projet.
+
+## Structure du Projet
+
+Le projet est organisé de la manière suivante :
+
+- `com/` : Gère la communication entre le serveur et le client.
+   - `com.c` : Implémente les fonctions de communication.
+   - `com.h` : Définit les structures et les prototypes pour `com.c`.
+- `connexion/` : Gère la connexion réseau.
+   - `connexion.c` : Implémente les fonctions de connexion.
+   - `connexion.h` : Définit les structures et les prototypes pour `connexion.c`.
+- `protocole/` : Gère le codage et le décodage des messages.
+   - `protocole.c` : Implémente les fonctions de codage et de décodage.
+   - `protocole.h` : Définit les structures et les prototypes pour `protocole.c`.
+- `main.c` : Le point d'entrée du programme.
+- `fichier.proto` : Définit les structures des messages.
+- `Makefile` : Script de compilation pour le projet.
+- `README.md` : Ce fichier, expliquant comment installer, construire et exécuter le projet.
+
 
 ## Utilisation
 
@@ -48,31 +92,32 @@ nc localhost 12345
 
 ## Explication de l'exécution
 
-Lorsque le programme principal `main` est exécuté, il procède comme suit :
+Le programme principal `main` s'exécute selon les étapes suivantes :
 
-1. **Initialisation de la connexion** : 
-   - Le serveur est initialisé pour écouter sur un port spécifié grâce à la fonction `connexion_init`.
+1. **Initialisation de la Communication** : 
+   - Le système initialise la communication en appelant `com_init()`, qui configure la file de messages et lance les threads de lecture et d'écriture.
 
-2. **Attente de connexion** : 
-   - Le serveur attend passivement qu'un client établisse une connexion en utilisant `connexion_accept`.
+2. **Établissement de la Connexion** :
+   - Le serveur, à travers `connexion_init()`, configure et écoute sur un port TCP/IP spécifié. Il attend ensuite une connexion entrante avec `connexion_accept()`.
 
-3. **Création du message Protobuf** : 
-   - Un message est créé en instanciant la structure `Message` définie dans `fichier.pb-c.h` et en assignant une chaîne de caractères au champ texte.
+3. **Interaction avec l'Utilisateur** : 
+   - Une fois la connexion établie, l'utilisateur est invité à entrer des commandes pour envoyer différents types de messages (par exemple, `04` pour `battery_level`).
 
-4. **Sérialisation du message** : 
-   - Le message est converti en une séquence d'octets (sérialisé) pour le transfert à travers le réseau.
+4. **Création et Envoi de Messages Protobuf** : 
+   - Selon l'entrée de l'utilisateur, un message spécifique est créé et sérialisé en utilisant Protocol Buffers. La sérialisation convertit la structure du message en un format adapté à la transmission réseau.
 
-5. **Envoi du message** : 
-   - Le message sérialisé est envoyé au client connecté via la fonction `connexion_write`.
+5. **Transmission des Messages** : 
+   - Les messages sérialisés sont envoyés sur le réseau via `com_send_message()`, qui place le message dans la file de messages. Le thread d'écriture lit ensuite ce message, le transmet via la socket TCP au client connecté.
 
-6. **Fermeture de la connexion** : 
-   - Après l'envoi, la connexion est fermée proprement avec `close_connection`, libérant ainsi les ressources réseau.
+6. **Réception et Traitement des Réponses** :
+   - En parallèle, le thread de lecture surveille les données entrantes sur la socket. Lorsqu'un message est reçu, il est désérialisé en une structure de message Protobuf pour traitement.
 
-7. **Désérialisation du message (optionnelle)** : 
-   - Si une réponse est reçue, elle peut être lue et convertie en structure de message pour être traitée.
+7. **Fermeture de la Communication** :
+   - L'utilisateur peut arrêter le programme en entrant `q`. Cela déclenche `com_stop()`, qui envoie un message d'arrêt aux threads et ferme la connexion réseau proprement.
 
-8. **Nettoyage** : 
-   - Le programme libère le buffer de sérialisation et toutes autres ressources allouées avant de se terminer.
+8. **Nettoyage des Ressources** :
+   - Avant de se terminer, le programme effectue un nettoyage, en libérant toutes les ressources allouées, y compris les buffers de sérialisation et les file de messages, assurant ainsi une fermeture sans fuite de mémoire.
 
-À chaque étape, le programme inclut une gestion d'erreur pour traiter les situations telles que les échecs de connexion ou les problèmes d'allocation de mémoire. En cas d'erreur, le programme affichera un message approprié et se terminera de manière anticipée pour éviter tout comportement inattendu.
+À chaque étape, le programme intègre une gestion d'erreur robuste pour assurer un fonctionnement stable et sécurisé, même en cas de problèmes de réseau, de sérialisation ou d'allocation de mémoire. En cas d'erreur, des messages descriptifs sont affichés pour faciliter le débogage et la résolution des problèmes.
+
 

@@ -15,7 +15,6 @@ int main() {
 
     char input[10];
     while (1) {
-        sleep(2);
         printf("ID du message > ");
         scanf("%s", input);
 
@@ -50,6 +49,7 @@ int main() {
         } else {
             printf("ID invalide.\n");
         }
+        sleep(2);
     }
 
     com_stop();

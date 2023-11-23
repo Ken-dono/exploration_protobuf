@@ -189,7 +189,7 @@ void *thread_read_fct() {
         protocole_decode(msg, buffer, len);
 
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : ID : %d | PAYLOAD 0 : %d", msg->id, msg->payload[0]);
+        printf("COM | thread_read_fct : ID : %d | PAYLOAD 0 : %d\n", msg->id, msg->payload[0]);
 
         // // Libérer le buffer de msg
         free(buffer);

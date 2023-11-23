@@ -61,7 +61,7 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 
     while (total_bytes_read < length) {
         bytes_read = read(socket_client, buffer + total_bytes_read, length - total_bytes_read);
-
+        printf("CONNEXION | connexion_read : bytes_read : %ld\n", bytes_read);
         if (bytes_read < 0) {
             perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
             return -1; // Retourne une erreur

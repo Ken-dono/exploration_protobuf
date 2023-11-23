@@ -132,14 +132,16 @@ void *thread_write_fct() {
             } else if (bytes_send > 0){
                 // Serialize the message
                 uint8_t *buffer;
-                size_t *len;
-                protocole_code(msg, &buffer, len);
+                size_t len;
+                protocole_code(msg, &buffer, &len);
 
                 // Send a first packet with the lenght and ID of the serialized packet
-                uint8_t payload_descriptor_send[1];
-                payload_descriptor_send[0] = (uint8_t)len;
-                connexion_write(payload_descriptor_send, 1);
-                printf("COM | thread_write_fct : size_send : %02X\n", payload_descriptor_send[0]);
+                uint8_t payload_descriptor_send[3];
+                payload_descriptor_send[0] = (uint8_t)((len >> 8) & 0xFF); // Octet de poids fort
+                payload_descriptor_send[1] = (uint8_t)(len & 0xFF);        // Octet de poids faible
+                payload_descriptor_send[2] = msg->id;
+                connexion_write(payload_descriptor_send, 3);
+                printf("COM | thread_write_fct : size_send : %02X%02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
 
                 // Send the serialized packet
                 connexion_write(buffer, len);

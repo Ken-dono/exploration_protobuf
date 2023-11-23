@@ -14,8 +14,8 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
             // Assignation d'un message
             battery_level.level = message->payload[0];
             // Sérialisation du message
-            len = battery_level__get_packed_size(&battery_level);
-            *buffer = malloc(len);
+            *len = battery_level__get_packed_size(&battery_level);
+            *buffer = malloc(*len);
             if (*buffer == NULL) {
                 fprintf(stderr, "Erreur d'allocation de mémoire\n");
                 exit(EXIT_FAILURE);
@@ -28,8 +28,8 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
             status_explo.status = message->payload[0];
             status_explo.pourcentage = message->payload[1];
             status_explo.temps = message->payload[2];
-            len = status_explo__get_packed_size(&status_explo);
-            *buffer = malloc(len);
+            *len = status_explo__get_packed_size(&status_explo);
+            *buffer = malloc(*len);
             if (*buffer == NULL) {
                 fprintf(stderr, "Erreur d'allocation de mémoire\n");
                 exit(EXIT_FAILURE);
@@ -42,8 +42,8 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
             Position position = POSITION__INIT; 
             position.x = message->payload[0];
             position.y = message->payload[1];
-            len = position__get_packed_size(&position);
-            *buffer = malloc(len);
+            *len = position__get_packed_size(&position);
+            *buffer = malloc(*len);
             if (*buffer == NULL) {
                 fprintf(stderr, "Erreur d'allocation de mémoire\n");
                 exit(EXIT_FAILURE);
@@ -59,10 +59,10 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
     }
     MessageType message_type = MESSAGE_TYPE__INIT;
     message_type.id = message->id;
-    message_type.payload.len = len;
-    message_type.payload.data = buffer;
-    len = message_type__get_packed_size(&message_type);
-    *buffer = malloc(len);
+    message_type.payload.len = *len;
+    message_type.payload.data = *buffer;
+    *len = message_type__get_packed_size(&message_type);
+    *buffer = malloc(*len);
     if (*buffer == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire\n");
         exit(EXIT_FAILURE);

@@ -15,6 +15,7 @@ PROTOBUF_C__BEGIN_DECLS
 #endif
 
 
+typedef struct _MessageType MessageType;
 typedef struct _ArretUrgence ArretUrgence;
 typedef struct _StopMarco StopMarco;
 typedef struct _BatteryLevel BatteryLevel;
@@ -30,10 +31,20 @@ typedef struct _SetExploParam SetExploParam;
 
 /* --- messages --- */
 
-struct  _ArretUrgence
+struct  _MessageType
 {
   ProtobufCMessage base;
   uint32_t id;
+  ProtobufCBinaryData payload;
+};
+#define MESSAGE_TYPE__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&message_type__descriptor) \
+    , 0, {0,NULL} }
+
+
+struct  _ArretUrgence
+{
+  ProtobufCMessage base;
   /*
    * État de l'arrêt d'urgence
    */
@@ -41,13 +52,12 @@ struct  _ArretUrgence
 };
 #define ARRET_URGENCE__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&arret_urgence__descriptor) \
-    , 0, 0 }
+    , 0 }
 
 
 struct  _StopMarco
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * État de l'arrêt de MARCO
    */
@@ -55,13 +65,12 @@ struct  _StopMarco
 };
 #define STOP_MARCO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&stop_marco__descriptor) \
-    , 0, 0 }
+    , 0 }
 
 
 struct  _BatteryLevel
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * Niveau de la batterie
    */
@@ -69,13 +78,12 @@ struct  _BatteryLevel
 };
 #define BATTERY_LEVEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&battery_level__descriptor) \
-    , 0, 0 }
+    , 0 }
 
 
 struct  _DeplacementManuel
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * Direction du déplacement
    */
@@ -87,13 +95,12 @@ struct  _DeplacementManuel
 };
 #define DEPLACEMENT_MANUEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&deplacement_manuel__descriptor) \
-    , 0, 0, 0 }
+    , 0, 0 }
 
 
 struct  _StatusExplo
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * StatusEnum
    */
@@ -109,13 +116,12 @@ struct  _StatusExplo
 };
 #define STATUS_EXPLO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&status_explo__descriptor) \
-    , 0, 0, 0, 0 }
+    , 0, 0, 0 }
 
 
 struct  _SetExploAlgo
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * Algo
    */
@@ -123,13 +129,12 @@ struct  _SetExploAlgo
 };
 #define SET_EXPLO_ALGO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&set_explo_algo__descriptor) \
-    , 0, 0 }
+    , 0 }
 
 
 struct  _Position
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * Position X (mm)
    */
@@ -141,13 +146,12 @@ struct  _Position
 };
 #define POSITION__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&position__descriptor) \
-    , 0, 0, 0 }
+    , 0, 0 }
 
 
 struct  _SetExploParam
 {
   ProtobufCMessage base;
-  uint32_t id;
   /*
    * Type
    */
@@ -163,9 +167,28 @@ struct  _SetExploParam
 };
 #define SET_EXPLO_PARAM__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&set_explo_param__descriptor) \
-    , 0, 0, 0, 0 }
+    , 0, 0, 0 }
 
 
+/* MessageType methods */
+void   message_type__init
+                     (MessageType         *message);
+size_t message_type__get_packed_size
+                     (const MessageType   *message);
+size_t message_type__pack
+                     (const MessageType   *message,
+                      uint8_t             *out);
+size_t message_type__pack_to_buffer
+                     (const MessageType   *message,
+                      ProtobufCBuffer     *buffer);
+MessageType *
+       message_type__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   message_type__free_unpacked
+                     (MessageType *message,
+                      ProtobufCAllocator *allocator);
 /* ArretUrgence methods */
 void   arret_urgence__init
                      (ArretUrgence         *message);
@@ -320,6 +343,9 @@ void   set_explo_param__free_unpacked
                       ProtobufCAllocator *allocator);
 /* --- per-message closures --- */
 
+typedef void (*MessageType_Closure)
+                 (const MessageType *message,
+                  void *closure_data);
 typedef void (*ArretUrgence_Closure)
                  (const ArretUrgence *message,
                   void *closure_data);
@@ -350,6 +376,7 @@ typedef void (*SetExploParam_Closure)
 
 /* --- descriptors --- */
 
+extern const ProtobufCMessageDescriptor message_type__descriptor;
 extern const ProtobufCMessageDescriptor arret_urgence__descriptor;
 extern const ProtobufCMessageDescriptor stop_marco__descriptor;
 extern const ProtobufCMessageDescriptor battery_level__descriptor;

@@ -32,7 +32,7 @@ typedef struct
  * @param buffer    the buffer that will contain the encoded frame
  * @param len       the buffer lenght
  */
-void protocole_code(message_t * message, uint8_t ** buffer, size_t * len);
+void protocole_code(message_t * message, uint8_t ** buffer, size_t *len);
 
 /**
  * Decode a message to send it on the network as a frame

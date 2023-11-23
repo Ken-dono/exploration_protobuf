@@ -188,16 +188,12 @@ void *thread_read_fct() {
 
         protocole_decode(msg, buffer, len);
 
-        // // Afficher le message reçu pour débogage
-        // printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
-        // for (size_t i = 0; i < len; ++i) {
-        //     printf("%02X ", buffer[i]);
-        // }
-        // printf("\n");
+        // Afficher le message reçu pour débogage
+        printf("COM | thread_read_fct : ID : %d | PAYLOAD 0 : %d", msg->id, msg->payload[0]);
 
         // // Libérer le buffer de msg
         free(buffer);
-        // free(msg);
+        free(msg);
 
         usleep(200);
     }

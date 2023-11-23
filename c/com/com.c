@@ -136,11 +136,10 @@ void *thread_write_fct() {
                 protocole_code(msg, &buffer, &len);
 
                 // Send a first packet with the lenght and ID of the serialized packet
-                uint8_t payload_descriptor_send[2];
+                uint8_t payload_descriptor_send[1];
                 payload_descriptor_send[0] = (uint8_t)len;
-                payload_descriptor_send[1] = (uint8_t)msg->id;
-                connexion_write(payload_descriptor_send, 2);
-                printf("COM | thread_write_fct : size_send : %02X | id_send : %02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
+                connexion_write(payload_descriptor_send, 1);
+                printf("COM | thread_write_fct : size_send : %02X\n", payload_descriptor_send[0]);
 
                 // Send the serialized packet
                 connexion_write(buffer, len);

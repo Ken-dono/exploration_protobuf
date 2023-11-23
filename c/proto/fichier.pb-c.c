@@ -367,11 +367,23 @@ void   set_explo_param__free_unpacked
   assert(message->base.descriptor == &set_explo_param__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
-static const ProtobufCFieldDescriptor arret_urgence__field_descriptors[1] =
+static const ProtobufCFieldDescriptor arret_urgence__field_descriptors[2] =
 {
   {
-    "state",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(ArretUrgence, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "state",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -383,12 +395,13 @@ static const ProtobufCFieldDescriptor arret_urgence__field_descriptors[1] =
   },
 };
 static const unsigned arret_urgence__field_indices_by_name[] = {
-  0,   /* field[0] = state */
+  0,   /* field[0] = id */
+  1,   /* field[1] = state */
 };
 static const ProtobufCIntRange arret_urgence__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 1 }
+  { 0, 2 }
 };
 const ProtobufCMessageDescriptor arret_urgence__descriptor =
 {
@@ -398,18 +411,30 @@ const ProtobufCMessageDescriptor arret_urgence__descriptor =
   "ArretUrgence",
   "",
   sizeof(ArretUrgence),
-  1,
+  2,
   arret_urgence__field_descriptors,
   arret_urgence__field_indices_by_name,
   1,  arret_urgence__number_ranges,
   (ProtobufCMessageInit) arret_urgence__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor stop_marco__field_descriptors[1] =
+static const ProtobufCFieldDescriptor stop_marco__field_descriptors[2] =
 {
   {
-    "state",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(StopMarco, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "state",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -421,12 +446,13 @@ static const ProtobufCFieldDescriptor stop_marco__field_descriptors[1] =
   },
 };
 static const unsigned stop_marco__field_indices_by_name[] = {
-  0,   /* field[0] = state */
+  0,   /* field[0] = id */
+  1,   /* field[1] = state */
 };
 static const ProtobufCIntRange stop_marco__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 1 }
+  { 0, 2 }
 };
 const ProtobufCMessageDescriptor stop_marco__descriptor =
 {
@@ -436,18 +462,30 @@ const ProtobufCMessageDescriptor stop_marco__descriptor =
   "StopMarco",
   "",
   sizeof(StopMarco),
-  1,
+  2,
   stop_marco__field_descriptors,
   stop_marco__field_indices_by_name,
   1,  stop_marco__number_ranges,
   (ProtobufCMessageInit) stop_marco__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor battery_level__field_descriptors[1] =
+static const ProtobufCFieldDescriptor battery_level__field_descriptors[2] =
 {
   {
-    "level",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(BatteryLevel, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "level",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -459,12 +497,13 @@ static const ProtobufCFieldDescriptor battery_level__field_descriptors[1] =
   },
 };
 static const unsigned battery_level__field_indices_by_name[] = {
-  0,   /* field[0] = level */
+  0,   /* field[0] = id */
+  1,   /* field[1] = level */
 };
 static const ProtobufCIntRange battery_level__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 1 }
+  { 0, 2 }
 };
 const ProtobufCMessageDescriptor battery_level__descriptor =
 {
@@ -474,18 +513,30 @@ const ProtobufCMessageDescriptor battery_level__descriptor =
   "BatteryLevel",
   "",
   sizeof(BatteryLevel),
-  1,
+  2,
   battery_level__field_descriptors,
   battery_level__field_indices_by_name,
   1,  battery_level__number_ranges,
   (ProtobufCMessageInit) battery_level__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor deplacement_manuel__field_descriptors[2] =
+static const ProtobufCFieldDescriptor deplacement_manuel__field_descriptors[3] =
 {
   {
-    "direction",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(DeplacementManuel, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "direction",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -497,7 +548,7 @@ static const ProtobufCFieldDescriptor deplacement_manuel__field_descriptors[2] =
   },
   {
     "speed",
-    2,
+    3,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -509,13 +560,14 @@ static const ProtobufCFieldDescriptor deplacement_manuel__field_descriptors[2] =
   },
 };
 static const unsigned deplacement_manuel__field_indices_by_name[] = {
-  0,   /* field[0] = direction */
-  1,   /* field[1] = speed */
+  1,   /* field[1] = direction */
+  0,   /* field[0] = id */
+  2,   /* field[2] = speed */
 };
 static const ProtobufCIntRange deplacement_manuel__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 2 }
+  { 0, 3 }
 };
 const ProtobufCMessageDescriptor deplacement_manuel__descriptor =
 {
@@ -525,18 +577,30 @@ const ProtobufCMessageDescriptor deplacement_manuel__descriptor =
   "DeplacementManuel",
   "",
   sizeof(DeplacementManuel),
-  2,
+  3,
   deplacement_manuel__field_descriptors,
   deplacement_manuel__field_indices_by_name,
   1,  deplacement_manuel__number_ranges,
   (ProtobufCMessageInit) deplacement_manuel__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor status_explo__field_descriptors[3] =
+static const ProtobufCFieldDescriptor status_explo__field_descriptors[4] =
 {
   {
-    "status",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(StatusExplo, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "status",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -548,7 +612,7 @@ static const ProtobufCFieldDescriptor status_explo__field_descriptors[3] =
   },
   {
     "pourcentage",
-    2,
+    3,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -560,7 +624,7 @@ static const ProtobufCFieldDescriptor status_explo__field_descriptors[3] =
   },
   {
     "temps",
-    3,
+    4,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -572,14 +636,15 @@ static const ProtobufCFieldDescriptor status_explo__field_descriptors[3] =
   },
 };
 static const unsigned status_explo__field_indices_by_name[] = {
-  1,   /* field[1] = pourcentage */
-  0,   /* field[0] = status */
-  2,   /* field[2] = temps */
+  0,   /* field[0] = id */
+  2,   /* field[2] = pourcentage */
+  1,   /* field[1] = status */
+  3,   /* field[3] = temps */
 };
 static const ProtobufCIntRange status_explo__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 3 }
+  { 0, 4 }
 };
 const ProtobufCMessageDescriptor status_explo__descriptor =
 {
@@ -589,18 +654,30 @@ const ProtobufCMessageDescriptor status_explo__descriptor =
   "StatusExplo",
   "",
   sizeof(StatusExplo),
-  3,
+  4,
   status_explo__field_descriptors,
   status_explo__field_indices_by_name,
   1,  status_explo__number_ranges,
   (ProtobufCMessageInit) status_explo__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor set_explo_algo__field_descriptors[1] =
+static const ProtobufCFieldDescriptor set_explo_algo__field_descriptors[2] =
 {
   {
-    "algo",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(SetExploAlgo, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "algo",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -612,12 +689,13 @@ static const ProtobufCFieldDescriptor set_explo_algo__field_descriptors[1] =
   },
 };
 static const unsigned set_explo_algo__field_indices_by_name[] = {
-  0,   /* field[0] = algo */
+  1,   /* field[1] = algo */
+  0,   /* field[0] = id */
 };
 static const ProtobufCIntRange set_explo_algo__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 1 }
+  { 0, 2 }
 };
 const ProtobufCMessageDescriptor set_explo_algo__descriptor =
 {
@@ -627,18 +705,30 @@ const ProtobufCMessageDescriptor set_explo_algo__descriptor =
   "SetExploAlgo",
   "",
   sizeof(SetExploAlgo),
-  1,
+  2,
   set_explo_algo__field_descriptors,
   set_explo_algo__field_indices_by_name,
   1,  set_explo_algo__number_ranges,
   (ProtobufCMessageInit) set_explo_algo__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor position__field_descriptors[2] =
+static const ProtobufCFieldDescriptor position__field_descriptors[3] =
 {
   {
-    "x",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(Position, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "x",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -650,7 +740,7 @@ static const ProtobufCFieldDescriptor position__field_descriptors[2] =
   },
   {
     "y",
-    2,
+    3,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -662,13 +752,14 @@ static const ProtobufCFieldDescriptor position__field_descriptors[2] =
   },
 };
 static const unsigned position__field_indices_by_name[] = {
-  0,   /* field[0] = x */
-  1,   /* field[1] = y */
+  0,   /* field[0] = id */
+  1,   /* field[1] = x */
+  2,   /* field[2] = y */
 };
 static const ProtobufCIntRange position__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 2 }
+  { 0, 3 }
 };
 const ProtobufCMessageDescriptor position__descriptor =
 {
@@ -678,18 +769,30 @@ const ProtobufCMessageDescriptor position__descriptor =
   "Position",
   "",
   sizeof(Position),
-  2,
+  3,
   position__field_descriptors,
   position__field_indices_by_name,
   1,  position__number_ranges,
   (ProtobufCMessageInit) position__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[3] =
+static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[4] =
 {
   {
-    "type",
+    "id",
     1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_UINT32,
+    0,   /* quantifier_offset */
+    offsetof(SetExploParam, id),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "type",
+    2,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -701,7 +804,7 @@ static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[3] =
   },
   {
     "isEnable",
-    2,
+    3,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -713,7 +816,7 @@ static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[3] =
   },
   {
     "value",
-    3,
+    4,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
     0,   /* quantifier_offset */
@@ -725,14 +828,15 @@ static const ProtobufCFieldDescriptor set_explo_param__field_descriptors[3] =
   },
 };
 static const unsigned set_explo_param__field_indices_by_name[] = {
-  1,   /* field[1] = isEnable */
-  0,   /* field[0] = type */
-  2,   /* field[2] = value */
+  0,   /* field[0] = id */
+  2,   /* field[2] = isEnable */
+  1,   /* field[1] = type */
+  3,   /* field[3] = value */
 };
 static const ProtobufCIntRange set_explo_param__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 3 }
+  { 0, 4 }
 };
 const ProtobufCMessageDescriptor set_explo_param__descriptor =
 {
@@ -742,7 +846,7 @@ const ProtobufCMessageDescriptor set_explo_param__descriptor =
   "SetExploParam",
   "",
   sizeof(SetExploParam),
-  3,
+  4,
   set_explo_param__field_descriptors,
   set_explo_param__field_indices_by_name,
   1,  set_explo_param__number_ranges,

@@ -33,6 +33,7 @@ typedef struct _SetExploParam SetExploParam;
 struct  _ArretUrgence
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * État de l'arrêt d'urgence
    */
@@ -40,12 +41,13 @@ struct  _ArretUrgence
 };
 #define ARRET_URGENCE__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&arret_urgence__descriptor) \
-    , 0 }
+    , 0, 0 }
 
 
 struct  _StopMarco
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * État de l'arrêt de MARCO
    */
@@ -53,12 +55,13 @@ struct  _StopMarco
 };
 #define STOP_MARCO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&stop_marco__descriptor) \
-    , 0 }
+    , 0, 0 }
 
 
 struct  _BatteryLevel
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * Niveau de la batterie
    */
@@ -66,12 +69,13 @@ struct  _BatteryLevel
 };
 #define BATTERY_LEVEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&battery_level__descriptor) \
-    , 0 }
+    , 0, 0 }
 
 
 struct  _DeplacementManuel
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * Direction du déplacement
    */
@@ -83,12 +87,13 @@ struct  _DeplacementManuel
 };
 #define DEPLACEMENT_MANUEL__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&deplacement_manuel__descriptor) \
-    , 0, 0 }
+    , 0, 0, 0 }
 
 
 struct  _StatusExplo
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * StatusEnum
    */
@@ -104,12 +109,13 @@ struct  _StatusExplo
 };
 #define STATUS_EXPLO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&status_explo__descriptor) \
-    , 0, 0, 0 }
+    , 0, 0, 0, 0 }
 
 
 struct  _SetExploAlgo
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * Algo
    */
@@ -117,12 +123,13 @@ struct  _SetExploAlgo
 };
 #define SET_EXPLO_ALGO__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&set_explo_algo__descriptor) \
-    , 0 }
+    , 0, 0 }
 
 
 struct  _Position
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * Position X (mm)
    */
@@ -134,12 +141,13 @@ struct  _Position
 };
 #define POSITION__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&position__descriptor) \
-    , 0, 0 }
+    , 0, 0, 0 }
 
 
 struct  _SetExploParam
 {
   ProtobufCMessage base;
+  uint32_t id;
   /*
    * Type
    */
@@ -155,7 +163,7 @@ struct  _SetExploParam
 };
 #define SET_EXPLO_PARAM__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&set_explo_param__descriptor) \
-    , 0, 0, 0 }
+    , 0, 0, 0, 0 }
 
 
 /* ArretUrgence methods */

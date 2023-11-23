@@ -136,11 +136,10 @@ void *thread_write_fct() {
                 protocole_code(msg, &buffer, &len);
 
                 // Send a first packet with the lenght and ID of the serialized packet
-                uint8_t payload_descriptor_send[3];
+                uint8_t payload_descriptor_send[2];
                 payload_descriptor_send[0] = (uint8_t)((len >> 8) & 0xFF); // Octet de poids fort
                 payload_descriptor_send[1] = (uint8_t)(len & 0xFF);        // Octet de poids faible
-                payload_descriptor_send[2] = msg->id;
-                connexion_write(payload_descriptor_send, 3);
+                connexion_write(payload_descriptor_send, 2);
                 printf("COM | thread_write_fct : size_send : %02X%02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
 
                 // Send the serialized packet
@@ -166,18 +165,19 @@ void *thread_write_fct() {
 void *thread_read_fct() {
     while (running == 1) {
         // Lire la taille du message (1 octets)
-        uint8_t payload_descriptor_received[1];
-        connexion_read(payload_descriptor_received, 1);
+        uint8_t payload_descriptor_received[3];
+        connexion_read(payload_descriptor_received, 3);
         // Afficher le message reçu pour débogage
-        printf("COM | thread_write_fct : size_received : %02X\n", payload_descriptor_received[0]);
-
-        message_t *msg = malloc(sizeof(message_t));
-        msg->id = payload_descriptor_received[1];
+        printf("COM | thread_write_fct : size_received : %02X%02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
 
         // Lire le message basé sur la taille lue
-        size_t len = (size_t) payload_descriptor_received[0];
+        size_t len = ((size_t)payload_descriptor_received[0] << 8) | (size_t)payload_descriptor_received[1];
+        printf("COM | thread_write_fct : len_to_read (combined) : %ld\n", len);
+
+        message_t *msg = malloc(sizeof(message_t));
+        msg->id = payload_descriptor_received[2];
+
         uint8_t *buffer = malloc(len);
-        printf("COM | thread_write_fct : len_to_read : %ld\n", len);
         connexion_read(buffer, len);
 
         // Afficher le message reçu pour débogage

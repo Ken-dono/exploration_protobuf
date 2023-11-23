@@ -176,6 +176,8 @@ void *thread_read_fct() {
         // Lire le message basé sur la taille lue
         size_t len = (size_t) payload_descriptor_received[0];
         uint8_t *buffer = malloc(len);
+        printf("COM | thread_write_fct : len_to_read : %d\n", payload_descriptor_received[0]);
+        printf("COM | thread_write_fct : len_to_read : %ld\n", len);
         connexion_read(buffer, len);
 
         // Afficher le message reçu pour débogage
@@ -185,18 +187,18 @@ void *thread_read_fct() {
         }
         printf("\n");
 
-        protocole_decode(msg, buffer, len);
+        // protocole_decode(msg, buffer, len);
 
-        // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
-        for (size_t i = 0; i < len; ++i) {
-            printf("%02X ", buffer[i]);
-        }
-        printf("\n");
+        // // Afficher le message reçu pour débogage
+        // printf("COM | thread_read_fct : ID : %d | PAYLOAD : ", msg->id);
+        // for (size_t i = 0; i < len; ++i) {
+        //     printf("%02X ", buffer[i]);
+        // }
+        // printf("\n");
 
-        // Libérer le buffer de msg
+        // // Libérer le buffer de msg
         free(buffer);
-        free(msg);
+        // free(msg);
 
         usleep(200);
     }

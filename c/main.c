@@ -23,7 +23,7 @@ int main() {
         }
 
         if (strcmp(input, "04") == 0) {
-            // Exemple d'envoi de message : battery_level 70%
+            // Exemple d'envoi de message : battery_level 255%
             message_t battery_level;
             battery_level.dlc = 0x02;
             battery_level.id = 0X04;

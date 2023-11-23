@@ -78,7 +78,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             }
             // Mise à jour du payload du message
             message->payload[0] = arret_urgence_in->state;
-            printf("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %02X | deser_state : %02X\n", message->id, message->payload[0]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
             // Libération du message désérialisé
             arret_urgence__free_unpacked(arret_urgence_in, NULL);
             break;

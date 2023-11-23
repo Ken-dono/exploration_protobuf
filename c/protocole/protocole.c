@@ -73,9 +73,15 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
 
 void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
     printf("PROTOCOLE | protocole_decode : size_received : %02lX | id_received : %02X\n", len, message->id);
-    switch (message->id) {
+    MessageType *message_type_in = message_type__unpack(NULL, len, buffer);
+    if (message_type_in == NULL) {
+        fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    switch (message_type_in->id) {
         case 0x01: {
-            printf("PROTOCOLE | protocole_decode | case -> 0x01 | size_received : %02lX | id_received : %02X\n", len, message->id);
+            printf("PROTOCOLE | protocole_decode | case -> 0x01 | size_received : %02lX | id_received : %02X\n", len, message_type_in->id);
             // Afficher le message reçu pour débogage
             printf("PROTOCOLE | protocole_decode | buffer : ");
             for (size_t i = 0; i < len; ++i) {
@@ -83,7 +89,8 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             }
             printf("\n");
             // Désérialisation du message
-            ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, len, buffer);
+            size_t len_payload = arret_urgence__get_packed_size((ArretUrgence *)&(message_type_in->payload));
+            ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, len_payload, (uint8_t *)&(message_type_in->payload));
             if (arret_urgence_in == NULL) {
                 fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
                 exit(EXIT_FAILURE);

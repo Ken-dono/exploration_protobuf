@@ -164,9 +164,9 @@ void *thread_write_fct() {
 
 void *thread_read_fct() {
     while (running == 1) {
-        // Lire la taille du message (1 octets)
-        uint8_t payload_descriptor_received[3];
-        connexion_read(payload_descriptor_received, 3);
+        // Lire la taille du message (2 octets)
+        uint8_t payload_descriptor_received[2];
+        connexion_read(payload_descriptor_received, 2);
         // Afficher le message reçu pour débogage
         printf("COM | thread_write_fct : size_received : %02X%02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
 
@@ -175,8 +175,6 @@ void *thread_read_fct() {
         printf("COM | thread_write_fct : len_to_read (combined) : %ld\n", len);
 
         message_t *msg = malloc(sizeof(message_t));
-        msg->id = payload_descriptor_received[2];
-
         uint8_t *buffer = malloc(len);
         connexion_read(buffer, len);
 

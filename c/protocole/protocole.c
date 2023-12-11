@@ -71,6 +71,7 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
     message_type__pack(&message_type, *buffer);
 }
 
+
 void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
     printf("PROTOCOLE | protocole_decode : size_received : %02lX | id_received : %02X\n", len, message->id);
     MessageType *message_type_in = message_type__unpack(NULL, len, buffer);

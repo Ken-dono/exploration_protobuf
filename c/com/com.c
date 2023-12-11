@@ -31,23 +31,23 @@ void com_start(){
     connexion_init(SERVER_PORT);
 
     // Wait for connection
-    printf("COM | com_init : En attente de connexion\n");
+    TRACE("COM | com_init : En attente de connexion\n");
     socket_client = connexion_accept();
 
     running = 1; 
 
     // Launch writing thread
     if (pthread_create(&thread_write, NULL, thread_write_fct, NULL) != 0) {
-        fprintf(stderr, "COM | com_init : erreur pthread_create thread_write\n");
+        perror("COM | com_init : erreur pthread_create thread_write");
         exit(-1);
     }
-    printf("COM | com_start : thread_write lancé\n");
+    TRACE("COM | com_start : thread_write lancé\n");
     // Launch reading thread
     if (pthread_create(&thread_read, NULL, thread_read_fct, NULL) != 0) {
-        fprintf(stderr, "COM | com_init : erreur pthread_create thread_read\n");
+        perror("COM | com_init : erreur pthread_create thread_read");
         exit(-1);
     }
-    printf("COM | com_start : thread_read lancé\n");
+    TRACE("COM | com_start : thread_read lancé\n");
 }
 
 void com_stop(){
@@ -65,11 +65,11 @@ void com_stop(){
     if (pthread_join(thread_write, NULL) != 0) {
         perror("COM | com_stop : erreur pthread_join thread_write");
     }
-    printf("COM | com_stop : thread_write stopped\n");
+    TRACE("COM | com_stop : thread_write stopped\n");
     if (pthread_join(thread_read, NULL) != 0) {
         perror("COM | com_stop : erreur pthread_join thread_read");
     }
-    printf("COM | com_stop : thread_read stopped\n");
+    TRACE("COM | com_stop : thread_read stopped\n");
 }
 
 void com_send_message(message_t * message){
@@ -92,7 +92,7 @@ void com_init() {
         mq_unlink( MQ_WRITE_NAME );
         mq_write = mq_open( MQ_WRITE_NAME , O_RDWR  |O_CREAT, 0644, &attr);
     }
-    printf("COM | com_init : mq_write créée avec succès\n");
+    TRACE("COM | com_init : mq_write créée avec succès\n");
     com_start();
 }
 
@@ -102,14 +102,14 @@ void com_free(){
         perror("COM | thread_write_fct : Erreur fermeture mq_write");
         exit(EXIT_FAILURE);
     }
-    printf("COM | com_free : Fermeture mq_write réussie\n");
+    TRACE("COM | com_free : Fermeture mq_write réussie\n");
 
     // Suppression de la file de messages
     if (mq_unlink(MQ_WRITE_NAME) == -1) {
         perror("COM | thread_write_fct : Erreur suppression mq_write");
         exit(EXIT_FAILURE);
     }
-    printf("COM | com_free : Suppression mq_write réussie\n");
+    TRACE("COM | com_free : Suppression mq_write réussie\n");
 }
 
 void *thread_write_fct() {
@@ -123,9 +123,9 @@ void *thread_write_fct() {
         ssize_t bytes_send = mq_receive(mq_write, ( char *) msg, sizeof(message_t), NULL);
         if (msg->id==0xAA)
         {
-            printf("COM | thread_write_fct : message stop recu\n");
+            TRACE("COM | thread_write_fct : message stop recu\n");
         } else {
-            printf("COM | thread_write_fct : bytes_send : %ld\n", bytes_send);
+            TRACE("COM | thread_write_fct : bytes_send : %ld\n", bytes_send);
             if (bytes_send == -1) {
                 perror("COM | thread_write_fct : mq_receive");
                 exit(EXIT_FAILURE);
@@ -140,17 +140,17 @@ void *thread_write_fct() {
                 payload_descriptor_send[0] = (uint8_t)((len >> 8) & 0xFF); // Octet de poids fort
                 payload_descriptor_send[1] = (uint8_t)(len & 0xFF);        // Octet de poids faible
                 connexion_write(payload_descriptor_send, 2);
-                printf("COM | thread_write_fct : size_send : %02X%02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
+                TRACE("COM | thread_write_fct : size_send : %02X%02X\n", payload_descriptor_send[0], payload_descriptor_send[1]);
 
                 // Send the serialized packet
                 connexion_write(buffer, len);
-                printf("COM | thread_write_fct : message send : ");
+                TRACE("COM | thread_write_fct : message send : ");
 
                 // DEBUG : Print the sended package
                 for (size_t i = 0; i < len; ++i) {
-                    printf("%02X ", buffer[i]);
+                    TRACE("%02X ", buffer[i]);
                 }
-                printf("\n");
+                TRACE("\n");
 
                 // Free the buffer
                 protocole_free(buffer);
@@ -168,27 +168,27 @@ void *thread_read_fct() {
         uint8_t payload_descriptor_received[2];
         connexion_read(payload_descriptor_received, 2);
         // Afficher le message reçu pour débogage
-        printf("COM | thread_write_fct : size_received : %02X%02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
+        TRACE("COM | thread_write_fct : size_received : %02X%02X\n", payload_descriptor_received[0], payload_descriptor_received[1]);
 
         // Lire le message basé sur la taille lue
         size_t len = ((size_t)payload_descriptor_received[0] << 8) | (size_t)payload_descriptor_received[1];
-        printf("COM | thread_write_fct : len_to_read (combined) : %ld\n", len);
+        TRACE("COM | thread_write_fct : len_to_read (combined) : %ld\n", len);
 
         message_t *msg = malloc(sizeof(message_t));
         uint8_t *buffer = malloc(len);
         connexion_read(buffer, len);
 
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : ID : %02X | PAYLOAD : ", msg->id);
+        TRACE("COM | thread_read_fct : ID : %02X | PAYLOAD : ", msg->id);
         for (size_t i = 0; i < len; ++i) {
-            printf("%02X ", buffer[i]);
+            TRACE("%02X ", buffer[i]);
         }
-        printf("\n");
+        TRACE("\n");
 
         protocole_decode(msg, buffer, len);
 
         // Afficher le message reçu pour débogage
-        printf("COM | thread_read_fct : ID : %d | PAYLOAD 0 : %d\n", msg->id, msg->payload[0]);
+        TRACE("COM | thread_read_fct : ID : %d | PAYLOAD 0 : %d\n", msg->id, msg->payload[0]);
 
         // // Libérer le buffer de msg
         free(buffer);

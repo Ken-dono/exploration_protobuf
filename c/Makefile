@@ -12,6 +12,11 @@ PROTO_SOURCE = $(PROTO_DIR)/fichier.pb-c.c
 PROTO_HEADER = $(PROTO_DIR)/fichier.pb-c.h
 PROTO_FILE = fichier.proto
 
+# Mode DEBUG
+ifeq ($(MODE),DEBUG)
+CFLAGS += -DDEBUG
+endif
+
 all: $(TARGET)
 
 $(TARGET): $(OBJ)

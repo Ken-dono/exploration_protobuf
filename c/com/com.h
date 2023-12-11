@@ -2,6 +2,14 @@
 // Created by buryhugo on 02/06/23.
 //
 
+//Gestion des TRACE -----------------------
+#ifdef DEBUG
+#define TRACE(...) printf(__VA_ARGS__)
+#else
+#define TRACE(...)
+#endif
+//-----------------------------------------
+
 #ifndef C_COM_H
 #define C_COM_H
 #include <inttypes.h>

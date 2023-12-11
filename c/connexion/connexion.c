@@ -49,9 +49,9 @@ int connexion_accept(){
     socket_client = accept(socket_serveur, NULL, NULL);
     if (socket_client == 1) {
         perror("CONNEXION | connexion_accept : Erreur lors de l'acceptation de la connexion entrante\n\n");
-    } else
-        printf("CONNEXION | connexion_accept : Client connecté sur la socket : %d\n", socket_client);
-
+    } else{
+        TRACE("CONNEXION | connexion_accept : Client connecté sur la socket : %d\n", socket_client);
+    }
     return socket_client;
 }
 
@@ -61,12 +61,12 @@ ssize_t connexion_read(uint8_t *buffer, size_t length) {
 
     while (total_bytes_read < length) {
         bytes_read = read(socket_client, buffer + total_bytes_read, length - total_bytes_read);
-        printf("CONNEXION | connexion_read : bytes_read : %ld\n", bytes_read);
+        TRACE("CONNEXION | connexion_read : bytes_read : %ld\n", bytes_read);
         if (bytes_read < 0) {
             perror("CONNEXION | connexion_read : Erreur lors de la lecture depuis la socket\n");
             return -1; // Retourne une erreur
         } else if (bytes_read == 0) {
-            printf("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
+            TRACE("CONNEXION | connexion_read : La connexion a été fermée par le client\n");
             return total_bytes_read; // Retourne le nombre total d'octets lus jusqu'à présent
         }
 
@@ -92,12 +92,12 @@ void connexion_close() {
             perror("CONNEXION | connexion_close : Erreur lors de la fermeture du socket client");
         }
     }
-    printf("CONNEXION | connexion_close : La connexion client a été fermée par le serveur\n");
+    TRACE("CONNEXION | connexion_close : La connexion client a été fermée par le serveur\n");
     // Fermeture du socket serveur
     if (socket_serveur >= 0) {
         if (close(socket_serveur) < 0) {
             perror("CONNEXION | connexion_close : Erreur lors de la fermeture du socket serveur");
         }
     }
-    printf("CONNEXION | connexion_close : La connexion serveur a été fermée par le serveur\n");
+    TRACE("CONNEXION | connexion_close : La connexion serveur a été fermée par le serveur\n");
 }

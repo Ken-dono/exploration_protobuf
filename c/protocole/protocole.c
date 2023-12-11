@@ -73,7 +73,7 @@ void protocole_code(message_t * message, uint8_t ** buffer, size_t *len)
 
 
 void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
-    printf("PROTOCOLE | protocole_decode : size_received : %02lX\n", len);
+    TRACE("PROTOCOLE | protocole_decode : size_received : %02lX\n", len);
 
     // Désérialisation du MessageType
     MessageType *message_type_in = message_type__unpack(NULL, len, buffer);
@@ -92,7 +92,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = arret_urgence_in->state;
-            printf("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
+            TRACE("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
             // Libération du ArretUrgence désérialisé
             arret_urgence__free_unpacked(arret_urgence_in, NULL);
             break;
@@ -107,7 +107,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = stop_marco_in->state;
-            printf("PROTOCOLE | protocole_decode | case -> 0x03 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
+            TRACE("PROTOCOLE | protocole_decode | case -> 0x03 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
             // Libération du StopMarco désérialisé
             stop_marco__free_unpacked(stop_marco_in, NULL);
             break;
@@ -123,7 +123,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             message->id = message_type_in->id;
             message->payload[0] = deplacement_manuel_in->direction;
             message->payload[1] = deplacement_manuel_in->speed;
-            printf("PROTOCOLE | protocole_decode | case -> 0x05 | deser_id : %d | deser_direction : %d | deser_speed : %d\n", message->id, message->payload[0], message->payload[1]);
+            TRACE("PROTOCOLE | protocole_decode | case -> 0x05 | deser_id : %d | deser_direction : %d | deser_speed : %d\n", message->id, message->payload[0], message->payload[1]);
             // Libération du DeplacementManuel désérialisé
             deplacement_manuel__free_unpacked(deplacement_manuel_in, NULL);
             break;
@@ -138,7 +138,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = set_explo_algo_in->algo;
-            printf("PROTOCOLE | protocole_decode | case -> 0x07 | deser_id : %d | deser_algo : %d\n", message->id, message->payload[0]);
+            TRACE("PROTOCOLE | protocole_decode | case -> 0x07 | deser_id : %d | deser_algo : %d\n", message->id, message->payload[0]);
             // Libération du SetExploAlgo désérialisé
             set_explo_algo__free_unpacked(set_explo_algo_in, NULL);
             break;
@@ -155,7 +155,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             message->payload[0] = set_explo_param_in->type;
             message->payload[1] = set_explo_param_in->isenable;
             message->payload[2] = set_explo_param_in->value;
-            printf("PROTOCOLE | protocole_decode | case -> 0x09 | deser_id : %d | deser_type : %d | deser_isenable : %d | deser_value : %d\n", message->id, message->payload[0], message->payload[1], message->payload[2]);
+            TRACE("PROTOCOLE | protocole_decode | case -> 0x09 | deser_id : %d | deser_type : %d | deser_isenable : %d | deser_value : %d\n", message->id, message->payload[0], message->payload[1], message->payload[2]);
             // Libération du SetExploParam désérialisé
             set_explo_param__free_unpacked(set_explo_param_in, NULL);
             break;
@@ -165,6 +165,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             break;
         }
     }
+    // Libération du MessageType désérialisé
     message_type__free_unpacked(message_type_in, NULL);
 }
 

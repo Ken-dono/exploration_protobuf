@@ -92,7 +92,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = arret_urgence_in->state;
-            TRACE("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
             // Libération du ArretUrgence désérialisé
             arret_urgence__free_unpacked(arret_urgence_in, NULL);
             break;
@@ -107,7 +107,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = stop_marco_in->state;
-            TRACE("PROTOCOLE | protocole_decode | case -> 0x03 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x03 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
             // Libération du StopMarco désérialisé
             stop_marco__free_unpacked(stop_marco_in, NULL);
             break;
@@ -123,7 +123,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             message->id = message_type_in->id;
             message->payload[0] = deplacement_manuel_in->direction;
             message->payload[1] = deplacement_manuel_in->speed;
-            TRACE("PROTOCOLE | protocole_decode | case -> 0x05 | deser_id : %d | deser_direction : %d | deser_speed : %d\n", message->id, message->payload[0], message->payload[1]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x05 | deser_id : %d | deser_direction : %d | deser_speed : %d\n", message->id, message->payload[0], message->payload[1]);
             // Libération du DeplacementManuel désérialisé
             deplacement_manuel__free_unpacked(deplacement_manuel_in, NULL);
             break;
@@ -138,7 +138,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             // Mise à jour du message
             message->id = message_type_in->id;
             message->payload[0] = set_explo_algo_in->algo;
-            TRACE("PROTOCOLE | protocole_decode | case -> 0x07 | deser_id : %d | deser_algo : %d\n", message->id, message->payload[0]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x07 | deser_id : %d | deser_algo : %d\n", message->id, message->payload[0]);
             // Libération du SetExploAlgo désérialisé
             set_explo_algo__free_unpacked(set_explo_algo_in, NULL);
             break;
@@ -155,7 +155,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
             message->payload[0] = set_explo_param_in->type;
             message->payload[1] = set_explo_param_in->isenable;
             message->payload[2] = set_explo_param_in->value;
-            TRACE("PROTOCOLE | protocole_decode | case -> 0x09 | deser_id : %d | deser_type : %d | deser_isenable : %d | deser_value : %d\n", message->id, message->payload[0], message->payload[1], message->payload[2]);
+            printf("PROTOCOLE | protocole_decode | case -> 0x09 | deser_id : %d | deser_type : %d | deser_isenable : %d | deser_value : %d\n", message->id, message->payload[0], message->payload[1], message->payload[2]);
             // Libération du SetExploParam désérialisé
             set_explo_param__free_unpacked(set_explo_param_in, NULL);
             break;

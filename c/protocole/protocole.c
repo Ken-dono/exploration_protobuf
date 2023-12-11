@@ -80,7 +80,7 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
     if (message_type_in == NULL) {
         fprintf(stderr, "Erreur lors de la désérialisation du MessageType\n");
         exit(EXIT_FAILURE);
-
+    }
     switch (message_type_in->id) {
         case 0x01: {
             ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, message_type_in->payload.len, message_type_in->payload.data);

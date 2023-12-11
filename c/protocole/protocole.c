@@ -83,48 +83,32 @@ void protocole_decode(message_t *message, uint8_t *buffer, size_t len){
     }
     switch (message_type_in->id) {
         case 0x01: {
+            // Désérialisation du ArretUrgence
             ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, message_type_in->payload.len, message_type_in->payload.data);
-
-            // printf("PROTOCOLE | protocole_decode | case -> 0x01 | size_received : %02lX | id_received : %02X\n", len, message_type_in->id);
-            // // Afficher le message reçu pour débogage
-            // printf("PROTOCOLE | protocole_decode | buffer : ");
-            // for (size_t i = 0; i < len; ++i) {
-            //     printf("%02X ", buffer[i]);
-            // }
-            // printf("\n");
-            // // Désérialisation du message
-            // size_t len_payload = arret_urgence__get_packed_size((ArretUrgence *)&(message_type_in->payload));
-            // ArretUrgence *arret_urgence_in = arret_urgence__unpack(NULL, len_payload, (uint8_t *)&(message_type_in->payload));
             if (arret_urgence_in == NULL) {
-                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                fprintf(stderr, "Erreur lors de la désérialisation du ArretUrgence reçu\n");
                 exit(EXIT_FAILURE);
             }
-            // Mise à jour du payload du message
+            // Mise à jour du message
+            message->id = message_type_in->id;
             message->payload[0] = arret_urgence_in->state;
             printf("PROTOCOLE | protocole_decode | case -> 0x01 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
-            // Libération du message désérialisé
+            // Libération du ArretUrgence désérialisé
             arret_urgence__free_unpacked(arret_urgence_in, NULL);
             break;
         }
         case 0x03: {
-            printf("PROTOCOLE | protocole_decode | case -> 0x03 | size_received : %02lX | id_received : %02X\n", len, message_type_in->id);
-            // Afficher le message reçu pour débogage
-            printf("PROTOCOLE | protocole_decode | buffer : ");
-            for (size_t i = 0; i < len; ++i) {
-                printf("%02X ", buffer[i]);
-            }
-            printf("\n");
-            // Désérialisation du message
-            size_t len_payload = stop_marco__get_packed_size((StopMarco *)&(message_type_in->payload));
-            StopMarco *stop_marco_in = stop_marco__unpack(NULL, len_payload, (uint8_t *)&(message_type_in->payload));
+            // Désérialisation du StopMarco
+            StopMarco *stop_marco_in = stop_marco__unpack(NULL, message_type_in->payload.len, message_type_in->payload.data);
             if (stop_marco_in == NULL) {
-                fprintf(stderr, "Erreur lors de la désérialisation du message reçu\n");
+                fprintf(stderr, "Erreur lors de la désérialisation du StopMarco reçu\n");
                 exit(EXIT_FAILURE);
             }
-            // Mise à jour du payload du message
+            // Mise à jour du message
+            message->id = message_type_in->id;
             message->payload[0] = stop_marco_in->state;
             printf("PROTOCOLE | protocole_decode | case -> 0x03 | deser_id : %d | deser_state : %d\n", message->id, message->payload[0]);
-            // Libération du message désérialisé
+            // Libération du StopMarco désérialisé
             stop_marco__free_unpacked(stop_marco_in, NULL);
             break;
         }

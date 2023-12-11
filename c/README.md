@@ -120,4 +120,11 @@ Le programme principal `main` s'exécute selon les étapes suivantes :
 
 À chaque étape, le programme intègre une gestion d'erreur robuste pour assurer un fonctionnement stable et sécurisé, même en cas de problèmes de réseau, de sérialisation ou d'allocation de mémoire. En cas d'erreur, des messages descriptifs sont affichés pour faciliter le débogage et la résolution des problèmes.
 
+## Mode Débogage
 
+Le projet supporte un mode de débogage qui peut être activé lors de la compilation. Pour compiler le projet en mode débogage, utilisez la commande suivante :
+
+```bash
+make MODE=DEBUG
+```
+En mode débogage, des informations supplémentaires sont imprimées sur la console pour aider au débogage du programme. En mode normal (release), ces informations sont omises pour une exécution plus propre.

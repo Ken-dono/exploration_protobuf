@@ -60,3 +60,24 @@ L'application fonctionne de la manière suivante :
 5. **Fermeture de la connexion** : L'utilisateur peut fermer la connexion à tout moment. L'application gère la fermeture propre de la connexion TCP.
 
 Cette procédure assure un échange de données sécurisé et efficace, tirant parti de la rapidité et de la légèreté de Protobuf pour la communication réseau.
+
+```java
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.7"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+```

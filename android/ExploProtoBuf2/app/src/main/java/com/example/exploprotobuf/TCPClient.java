@@ -180,6 +180,7 @@ public class TCPClient {
                                 sizeBuffer[1] = (byte)(sizeMoovMan & 0xFF);
                                 outputStream.write(sizeBuffer);
                                 outputStream.write(messageDeplacementManuel.toByteArray());
+
                                 break;
                             case 0x07:
                                 set_explo_algo setExploAlgo = set_explo_algo.newBuilder().setAlgo(data).build();

@@ -40,8 +40,42 @@ Ces ressources ont été utilisées pour acquérir des connaissances et résoudr
 - `fichier.proto` : Fichier de schéma Protobuf définissant la structure des messages.
 
 ## Intégration Protobuf
-
+- Installer le plugin "Protocol Buffers"
 - Définir les structures de données dans le fichier `.proto`.
+- Intégrer protobuf dans le build.gradle :  
+  
+  plugins:
+
+  ```java
+      id 'com.google.protobuf' version '0.9.1'
+  ```
+
+  dependencies:
+  ```java
+      implementation  "com.google.protobuf:protobuf-javalite:3.18.0"
+  ```
+
+  protoc:
+  ```java
+  protobuf {
+      protoc {
+          artifact = "com.google.protobuf:protoc:3.21.7"
+      }
+
+      // Generates the java Protobuf-lite code for the Protobufs in this project. See
+      // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+      // for more information.
+      generateProtoTasks {
+          all().each { task ->
+              task.builtins {
+                  java {
+                      option 'lite'
+                  }
+              }
+          }
+      }
+  }
+  ```
 - Générer le code Java pour les classes Protobuf.
 - Sérialiser et désérialiser les messages dans l'application.
 
@@ -61,23 +95,3 @@ L'application fonctionne de la manière suivante :
 
 Cette procédure assure un échange de données sécurisé et efficace, tirant parti de la rapidité et de la légèreté de Protobuf pour la communication réseau.
 
-```java
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.21.7"
-    }
-
-    // Generates the java Protobuf-lite code for the Protobufs in this project. See
-    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
-    // for more information.
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java {
-                    option 'lite'
-                }
-            }
-        }
-    }
-}
-```

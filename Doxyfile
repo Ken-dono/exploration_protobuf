@@ -7,7 +7,7 @@ PROJECT_NAME           = "exploration_protobuf_c"
 PROJECT_NUMBER         = 1.0
 
 # Chemin d'accès au dossier contenant les fichiers source (peut être une liste de chemins)
-INPUT = ./c/src
+INPUT = ./c
 
 # Générer la documentation de manière récursive dans les sous-dossiers
 RECURSIVE              = YES
@@ -48,4 +48,4 @@ INLINE_SOURCES         = YES
 STRIP_CODE_COMMENTS    = YES
 ALPHABETICAL_INDEX     = YES
 COLLABORATION_GRAPH    = YES
-USE_MDFILE_AS_MAINPAGE = ./c/src/README.md
+USE_MDFILE_AS_MAINPAGE = c/README.md

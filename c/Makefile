@@ -42,7 +42,7 @@ $(PROTO_SOURCE) $(PROTO_HEADER): $(PROTO_FILE)
 	protoc-c --c_out=$(PROTO_DIR) $(PROTO_FILE)
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJ)
 	rm -rf $(PROTO_DIR)
 
 run: $(TARGET)

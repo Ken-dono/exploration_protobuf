@@ -1,6 +1,3 @@
-//
-// Created by buryhugo on 02/06/23.
-//
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -46,6 +43,7 @@ void connexion_init(int server_port){
 }
 
 int connexion_accept(){
+    // Acceptation d'une connexion entrante
     socket_client = accept(socket_serveur, NULL, NULL);
     if (socket_client == 1) {
         perror("CONNEXION | connexion_accept : Erreur lors de l'acceptation de la connexion entrante\n\n");

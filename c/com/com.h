@@ -1,6 +1,13 @@
-//
-// Created by buryhugo on 02/06/23.
-//
+/**
+ * @file com.h
+ * @brief Interface pour la gestion de la communication entre serveur et client.
+ *
+ * Ce fichier définit les structures et prototypes nécessaires pour la gestion 
+ * de la communication réseau entre un serveur et un client.
+ */
+
+#ifndef C_COM_H
+#define C_COM_H
 
 //Gestion des TRACE -----------------------
 #ifdef DEBUG
@@ -10,42 +17,36 @@
 #endif
 //-----------------------------------------
 
-#ifndef C_COM_H
-#define C_COM_H
-#include <inttypes.h>
-#include "stdbool.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <pthread.h>
-#include <mqueue.h>
-
 #include "../protocole/protocole.h"
 
 /**
- * Init connection with M_CTRL
+ * @brief Initialise la file de messages pour l'écriture.
+ * Crée et configure la file de messages.
  */
 void com_init();
 
+/**
+ * @brief Libère les ressources utilisées par le système de communication.
+ * Ferme la file de messages et la supprime.
+ */
 void com_free();
 
 /**
- * Send a message to M_CTRL
- * @param msg   The message to send
+ * @brief Démarre le système de communication.
+ * Initialise la connexion et lance les threads de lecture et d'écriture.
  */
-void com_send_message(message_t *msg);
+void com_start();
 
 /**
- * Start threads
+ * @brief Arrête le système de communication.
+ * Envoie un message d'arrêt, ferme la connexion et les threads.
  */
 void com_stop();
 
 /**
- * Stop threads
+ * @brief Envoie un message à travers la file de messages.
+ * @param message Le message à envoyer.
  */
-void com_stop();
-
-
+void com_send_message(message_t * message);
 
 #endif //C_COM_H

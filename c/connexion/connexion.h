@@ -1,6 +1,7 @@
-//
-// Created by buryhugo on 02/06/23.
-//
+/**
+ * @file connexion.h
+ * @brief Ce fichier contient les déclarations des fonctions pour la gestion des connexions réseau.
+ */
 
 //Gestion des TRACE -----------------------
 #ifdef DEBUG
@@ -20,34 +21,37 @@
 #include "../protocole/protocole.h"
 
 /**
- * Init connexion with M_CTRL
+ * @brief Initialisation du serveur pour écouter sur un port spécifié.
  */
 void connexion_init();
 
 /**
- * Close connexion with M_CTRL
+ * @brief Ferme la connexion sur la socket spécifiée.
  */
 void connexion_close();
 
 /**
- * Wait for M_CTRL connexion
- * @return the socket number used by M_CTRL
+ * @brief Accepte une connexion entrante sur la socket du serveur.
+ *
+ * @return Un descripteur de fichier pour la socket connectée.
  */
 int connexion_accept();
 
 /**
- * Read message from received on a specific socket
- * @param buffer        the variable used to store the reveived message
- * @param length        the size of the buffer
- * @return              the buffer filled with the message
+ * @brief Lit des données sur la socket spécifiée.
+ *
+ * @param buffer Buffer pour stocker les données lues.
+ * @param length Taille maximale des données à lire.
+ * @return Le nombre d'octets lus.
  */
 ssize_t connexion_read(uint8_t *buffer, size_t length) ;
 
 /**
- * Write a message on a specific socket
- * @param data          the data to send
- * @param length        the size of the data
- * @return              the number of written bytes
+ * @brief Écrit des données sur la socket spécifiée.
+ *
+ * @param data Données à écrire.
+ * @param length Taille des données à écrire.
+ * @return Le nombre d'octets écrits.
  */
 ssize_t connexion_write(const uint8_t* data, size_t length);
 

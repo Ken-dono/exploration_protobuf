@@ -132,4 +132,4 @@ En mode débogage, des informations supplémentaires sont imprimées sur la cons
 
 ## Documentation du code
 
-La documentation complète du code, générée avec Doxygen, est disponible [ici](https://github.com/Ken-dono/exploration_protobuf/docs/index.html).
+La documentation complète du code, générée avec Doxygen, est disponible [ici](https://ken-dono.github.io/exploration_protobuf/index.html).

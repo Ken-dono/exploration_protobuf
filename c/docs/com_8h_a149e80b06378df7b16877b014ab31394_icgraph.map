@@ -1,0 +1,4 @@
+<map id="com_start" name="com_start">
+<area shape="rect" id="node1" title="Démarre le système de communication." alt="" coords="132,5,219,32"/>
+<area shape="rect" id="node2" href="$com_8h.html#a28f1bc7c9e3088ea5b6bb8d1b45131d7" title="Initialise la file de messages pour l&#39;écriture." alt="" coords="5,5,84,32"/>
+</map>

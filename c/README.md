@@ -128,3 +128,7 @@ Le projet supporte un mode de débogage qui peut être activé lors de la compil
 make MODE=DEBUG
 ```
 En mode débogage, des informations supplémentaires sont imprimées sur la console pour aider au débogage du programme. En mode normal (release), ces informations sont omises pour une exécution plus propre.
+
+## Documentation du code
+
+La documentation complète du code, générée avec Doxygen, est disponible [ici](https://github.com/Ken-dono/exploration_protobuf/docs/index.html).

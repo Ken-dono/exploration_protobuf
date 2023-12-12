@@ -1,0 +1,9 @@
+<map id="src/protocole/protocole.h" name="src/protocole/protocole.h">
+<area shape="rect" id="node1" title="Fichier d&#39;en&#45;tête pour la gestion du protocole de communication." alt="" coords="219,5,402,32"/>
+<area shape="rect" id="node2" href="$com_8h.html" title="Interface pour la gestion de la communication entre serveur et client." alt="" coords="5,80,123,107"/>
+<area shape="rect" id="node5" href="$connexion_8c_source.html" title=" " alt="" coords="279,155,473,181"/>
+<area shape="rect" id="node6" href="$connexion_8h.html" title="Ce fichier contient les déclarations des fonctions pour la gestion des connexions réseau." alt="" coords="147,80,341,107"/>
+<area shape="rect" id="node7" href="$protocole_8c_source.html" title=" " alt="" coords="417,80,599,107"/>
+<area shape="rect" id="node3" href="$com_8c_source.html" title=" " alt="" coords="137,155,253,181"/>
+<area shape="rect" id="node4" href="$main_8c_source.html" title=" " alt="" coords="19,155,109,181"/>
+</map>

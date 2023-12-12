@@ -1,0 +1,4 @@
+<map id="com_send_message" name="com_send_message">
+<area shape="rect" id="node1" title="Envoie un message à travers la file de messages." alt="" coords="139,5,293,32"/>
+<area shape="rect" id="node2" href="$com_8h.html#a4c85314f6f20bc88831f310ebc10a30d" title="Arrête le système de communication." alt="" coords="5,5,91,32"/>
+</map>

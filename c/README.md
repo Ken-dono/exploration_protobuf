@@ -6,7 +6,8 @@
 - [Installation](#installation)
 - [Structure du Projet](#structure-du-projet)
 - [Utilisation](#utilisation)
-- [Explication de l'exécution](#explication-de-lexécution)
+- [Mode Débogage](#mode-débogage)
+- [Documentation du code](#documentation-du-code)
 
 ## Description
 

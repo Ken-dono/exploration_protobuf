@@ -123,10 +123,10 @@ Le programme principal `main` s'exécute selon les étapes suivantes :
 
 ## Mode Débogage
 
-Le projet supporte un mode de débogage qui peut être activé lors de la compilation. Pour compiler le projet en mode débogage, utilisez la commande suivante :
+Le projet supporte un mode de débogage. Lors de la compilation, un executable en mode DEBUG est créé en parallèle de l'executable de la release normale. Le lancement de la version DEBUG est réalisé via la commande :
 
 ```bash
-make MODE=DEBUG
+make debug
 ```
 En mode débogage, des informations supplémentaires sont imprimées sur la console pour aider au débogage du programme. En mode normal (release), ces informations sont omises pour une exécution plus propre.
 

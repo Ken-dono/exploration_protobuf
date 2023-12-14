@@ -1,69 +1,61 @@
-# Compilateur à utiliser
+# Définition des variables du compilateur et des options de compilation
 CC = gcc
-# Options de compilation
 CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags libprotobuf-c)
-# Options de l'éditeur de liens
 LDFLAGS = $(shell pkg-config --libs libprotobuf-c) -lpthread -lrt
-# Nom du fichier de sortie
-TARGET = main
 
-# Répertoires contenant le code source
+# Noms des exécutables pour la version de production et la version de débogage
+TARGET = main
+DEBUG_TARGET = main_debug
+
+# Emplacements des répertoires source
 PROTO_DIR = proto
 COM_DIR = com
 CONNEXION_DIR = connexion
 PROTOCOLE_DIR = protocole
 
-# Fichiers objet à compiler
+# Fichiers objet nécessaires pour le lien final
 OBJ = main.o $(PROTO_DIR)/fichier.pb-c.o $(CONNEXION_DIR)/connexion.o $(COM_DIR)/com.o $(PROTOCOLE_DIR)/protocole.o
+DEBUG_OBJ = $(OBJ:.o=_debug.o)
 
-# Fichiers source et en-tête générés par protoc pour protobuf
+# Fichiers générés par protobuf
 PROTO_SOURCE = $(PROTO_DIR)/fichier.pb-c.c
 PROTO_HEADER = $(PROTO_DIR)/fichier.pb-c.h
-# Fichier proto original
 PROTO_FILE = fichier.proto
 
-# Vérifier si le mode DEBUG est activé
-ifeq ($(MODE),DEBUG)
-CFLAGS += -DDEBUG
-endif
+# La cible par défaut construit les versions release et debug
+all: $(TARGET) $(DEBUG_TARGET)
 
-# Cible par défaut
-all: $(TARGET)
-
-# Édition de liens du binaire cible
+# Construire la version release
 $(TARGET): $(OBJ)
 	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
 
-# Compilation du fichier principal
-main.o: main.c $(PROTO_HEADER)
-	$(CC) $(CFLAGS) -c main.c
+# Construire la version debug
+$(DEBUG_TARGET): CFLAGS += -DDEBUG
+$(DEBUG_TARGET): $(DEBUG_OBJ)
+	$(CC) $(DEBUG_OBJ) -o $(DEBUG_TARGET) $(LDFLAGS)
 
-# Compilation du module connexion
-connexion.o: $(CONNEXION_DIR)/connexion.c $(CONNEXION_DIR)/connexion.h
-	$(CC) $(CFLAGS) -c $(CONNEXION_DIR)/connexion.c
+# Règle générique pour construire n'importe quel .o à partir de .c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compilation du module com
-com.o: $(COM_DIR)/com.c $(COM_DIR)/com.h
-	$(CC) $(CFLAGS) -c $(COM_DIR)/com.c
+# Règle pour générer les fichiers objets spécifiques à la version de débogage
+%_debug.o: %.c
+	$(CC) $(CFLAGS) -DDEBUG -c $< -o $@
 
-# Compilation du module protocole
-protocole.o: $(PROTOCOLE_DIR)/protocole.c $(PROTOCOLE_DIR)/protocole.h
-	$(CC) $(CFLAGS) -c $(PROTOCOLE_DIR)/protocole.c
-
-# Compilation de la source générée par protobuf-c
-$(PROTO_DIR)/fichier.pb-c.o: $(PROTO_SOURCE) $(PROTO_HEADER)
-	$(CC) $(CFLAGS) -c $(PROTO_SOURCE) -o $@
-
-# Génération de la source et de l'en-tête protobuf-c à partir du fichier proto
+# Règle pour générer les fichiers sources et en-têtes protobuf
 $(PROTO_SOURCE) $(PROTO_HEADER): $(PROTO_FILE)
 	mkdir -p $(PROTO_DIR)
 	protoc-c --c_out=$(PROTO_DIR) $(PROTO_FILE)
 
-# Nettoyage de la construction
+# Nettoyer les fichiers objets et les répertoires générés
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(DEBUG_OBJ) $(TARGET) $(DEBUG_TARGET)
 	rm -rf $(PROTO_DIR)
 
-# Exécution du binaire cible
+# Exécuter le programme release
 run: $(TARGET)
 	./$(TARGET)
+
+# Exécuter le programme debug
+debug: $(DEBUG_TARGET)
+	./$(DEBUG_TARGET)

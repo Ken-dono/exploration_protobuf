@@ -34,13 +34,25 @@ $(DEBUG_TARGET): CFLAGS += -DDEBUG
 $(DEBUG_TARGET): $(DEBUG_OBJ)
 	$(CC) $(DEBUG_OBJ) -o $(DEBUG_TARGET) $(LDFLAGS)
 
-# Règle générique pour construire n'importe quel .o à partir de .c
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
 # Règle pour générer les fichiers objets spécifiques à la version de débogage
 %_debug.o: %.c
 	$(CC) $(CFLAGS) -DDEBUG -c $< -o $@
+
+# Ajout de règles pour la construction des fichiers .o dépendant des fichiers protobuf
+main.o: main.c $(PROTO_HEADER)
+	$(CC) $(CFLAGS) -c main.c -o main.o
+
+$(PROTO_DIR)/fichier.pb-c.o: $(PROTO_SOURCE) $(PROTO_HEADER)
+	$(CC) $(CFLAGS) -c $(PROTO_SOURCE) -o $(PROTO_DIR)/fichier.pb-c.o
+
+$(CONNEXION_DIR)/connexion.o: $(CONNEXION_DIR)/connexion.c $(CONNEXION_DIR)/connexion.h
+	$(CC) $(CFLAGS) -c $(CONNEXION_DIR)/connexion.c -o $(CONNEXION_DIR)/connexion.o
+
+$(COM_DIR)/com.o: $(COM_DIR)/com.c $(COM_DIR)/com.h $(PROTO_HEADER)
+	$(CC) $(CFLAGS) -c $(COM_DIR)/com.c -o $(COM_DIR)/com.o
+
+$(PROTOCOLE_DIR)/protocole.o: $(PROTOCOLE_DIR)/protocole.c $(PROTOCOLE_DIR)/protocole.h $(PROTO_HEADER)
+	$(CC) $(CFLAGS) -c $(PROTOCOLE_DIR)/protocole.c -o $(PROTOCOLE_DIR)/protocole.o
 
 # Règle pour générer les fichiers sources et en-têtes protobuf
 $(PROTO_SOURCE) $(PROTO_HEADER): $(PROTO_FILE)

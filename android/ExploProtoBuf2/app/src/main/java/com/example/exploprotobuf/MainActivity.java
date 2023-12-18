@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickConnection(View view) {
         Log.i("Conenction", "Click avant");
-        client.connect("172.21.10.248");
+        client.connect("172.21.11.12");
         Log.i("Conenction", "Click après");
 
     }

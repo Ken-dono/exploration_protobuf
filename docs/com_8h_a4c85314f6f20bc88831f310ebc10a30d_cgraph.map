@@ -1,0 +1,5 @@
+<map id="com_stop" name="com_stop">
+<area shape="rect" id="node1" title="Arrête le système de communication." alt="" coords="5,31,91,57"/>
+<area shape="rect" id="node2" href="$com_8h.html#abb7a981ab57e6aeb203c4258ef611391" title="Envoie un message à travers la file de messages." alt="" coords="139,5,293,32"/>
+<area shape="rect" id="node3" href="$connexion_8h.html#a25b4e13088d7c92e3fc30013b2dceb12" title="Ferme la connexion sur la socket spécifiée." alt="" coords="151,56,281,83"/>
+</map>

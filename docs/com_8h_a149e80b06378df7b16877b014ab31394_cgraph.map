@@ -1,0 +1,5 @@
+<map id="com_start" name="com_start">
+<area shape="rect" id="node1" title="Démarre le système de communication." alt="" coords="5,31,92,57"/>
+<area shape="rect" id="node2" href="$connexion_8h.html#a642d742fdc5cfea97e361615b1ced5b0" title="Accepte une connexion entrante sur la socket du serveur." alt="" coords="140,5,279,32"/>
+<area shape="rect" id="node3" href="$connexion_8h.html#a7a5a45d5cbebed8b7c6e554c0010f504" title="Initialisation du serveur pour écouter sur un port spécifié." alt="" coords="151,56,268,83"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="connexion_accept" name="connexion_accept">
+<area shape="rect" id="node1" title="Accepte une connexion entrante sur la socket du serveur." alt="" coords="267,5,405,32"/>
+<area shape="rect" id="node2" href="$com_8h.html#a149e80b06378df7b16877b014ab31394" title="Démarre le système de communication." alt="" coords="132,5,219,32"/>
+<area shape="rect" id="node3" href="$com_8h.html#a28f1bc7c9e3088ea5b6bb8d1b45131d7" title="Initialise la file de messages pour l&#39;écriture." alt="" coords="5,5,84,32"/>
+</map>

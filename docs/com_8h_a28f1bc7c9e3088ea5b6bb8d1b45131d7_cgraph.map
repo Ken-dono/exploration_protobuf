@@ -1,0 +1,6 @@
+<map id="com_init" name="com_init">
+<area shape="rect" id="node1" title="Initialise la file de messages pour l&#39;écriture." alt="" coords="5,31,84,57"/>
+<area shape="rect" id="node2" href="$com_8h.html#a149e80b06378df7b16877b014ab31394" title="Démarre le système de communication." alt="" coords="132,31,219,57"/>
+<area shape="rect" id="node3" href="$connexion_8h.html#a642d742fdc5cfea97e361615b1ced5b0" title="Accepte une connexion entrante sur la socket du serveur." alt="" coords="267,5,405,32"/>
+<area shape="rect" id="node4" href="$connexion_8h.html#a7a5a45d5cbebed8b7c6e554c0010f504" title="Initialisation du serveur pour écouter sur un port spécifié." alt="" coords="277,56,395,83"/>
+</map>

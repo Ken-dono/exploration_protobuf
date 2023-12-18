@@ -1,0 +1,51 @@
+# Ce fichier décrit les paramètres à utiliser par le système de documentation Doxygen.
+
+# Nom du projet
+PROJECT_NAME           = "exploration_protobuf_c"
+
+# Version du projet
+PROJECT_NUMBER         = 1.0
+
+# Chemin d'accès au dossier contenant les fichiers source (peut être une liste de chemins)
+INPUT = ./c
+
+# Générer la documentation de manière récursive dans les sous-dossiers
+RECURSIVE              = YES
+
+# Générer automatiquement des liens vers la documentation standard du C++
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = YES
+
+# Générer des graphiques de dépendance entre les fichiers et les entités
+HAVE_DOT               = YES
+
+# Format de sortie
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
+# Fichier de sortie HTML principal
+HTML_OUTPUT            = docs
+
+# Autoriser la recherche interactive dans la documentation HTML
+SEARCHENGINE           = YES
+
+# Inclure les graphiques de dépendance
+CLASS_DIAGRAMS         = YES
+
+# Générer des graphiques de dépendance pour les fonctions
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+# Utiliser des graphiques générés par dot
+DOT_GRAPH_MAX_NODES    = 100
+MAX_DOT_GRAPH_DEPTH    = 10
+DOT_TRANSPARENT        = YES
+
+# Autres options (activées/désactivées)
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+STRIP_CODE_COMMENTS    = YES
+ALPHABETICAL_INDEX     = YES
+COLLABORATION_GRAPH    = YES
+USE_MDFILE_AS_MAINPAGE = c/README.md
